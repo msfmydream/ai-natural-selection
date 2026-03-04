@@ -1,7 +1,7 @@
 ---
 title: "OpenAI 生产环境最佳实践指南（译）"
 date: 2026-03-05T01:00:00+08:00
-draft: false
+draft: true
 tags: ["ai", "openai", "生产环境", "最佳实践", "翻译搬运"]
 categories: ["AI"]
 description: "翻译自 OpenAI 官方生产环境指南，涵盖从原型到生产的最佳实践，包括扩展性、安全性和成本管理"

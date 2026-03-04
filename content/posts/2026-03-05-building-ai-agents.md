@@ -1,7 +1,7 @@
 ---
 title: "使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）"
 date: 2026-03-05T04:00:00+08:00
-draft: false
+draft: true
 tags: ["ai", "openai", "langchain", "agent", "tutorial", "翻译搬运"]
 categories: ["AI"]
 description: "翻译自 NetSet Software 的 AI Agent 构建指南，详细介绍如何使用 GPT 和 LangChain 开发智能代理"

@@ -1,7 +1,7 @@
 ---
 title: "构建生产级 AI Agent：LangChain 实战指南（译）"
 date: 2026-03-05T02:00:00+08:00
-draft: false
+draft: true
 tags: ["ai", "langchain", "agent", "生产环境", "翻译搬运"]
 categories: ["AI"]
 description: "翻译自 Kanaeru.ai 的生产级 AI Agent 构建指南，涵盖多模型编排、Prompt工程、错误处理等核心内容"
