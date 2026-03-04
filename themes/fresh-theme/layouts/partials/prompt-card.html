@@ -1,0 +1,23 @@
+<article class="prompt-card">
+    <a href="{{ .Permalink }}" class="prompt-card__link">
+        <div class="prompt-card__header">
+            <span class="prompt-card__icon">💡</span>
+            {{ if .Params.model }}
+            <span class="prompt-card__model">{{ .Params.model }}</span>
+            {{ end }}
+        </div>
+        <h3 class="prompt-card__title">{{ .Title }}</h3>
+        {{ if .Description }}
+        <p class="prompt-card__desc">{{ .Description }}</p>
+        {{ end }}
+        <div class="prompt-card__footer">
+            {{ if .Params.prompt_tags }}
+            <div class="prompt-card__tags">
+                {{ range first 3 .Params.prompt_tags }}
+                <span class="prompt-card__tag">{{ . }}</span>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </a>
+</article>

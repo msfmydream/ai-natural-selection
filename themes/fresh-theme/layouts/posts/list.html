@@ -1,0 +1,31 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">航行日志</h1>
+        <p class="page-header__desc">记录深空探索中的思考与发现</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {{ $paginator := .Paginate (where .Site.RegularPages "Section" "posts") }}
+        <div class="post-grid">
+            {{ range $paginator.Pages }}
+            {{ partial "post-card.html" . }}
+            {{ end }}
+        </div>
+        
+        {{ if gt $paginator.TotalPages 1 }}
+        <nav class="pagination">
+            {{ if $paginator.HasPrev }}
+            <a href="{{ $paginator.Prev.URL }}" class="pagination__link pagination__link--prev">← 上一页</a>
+            {{ end }}
+            <span class="pagination__info">{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+            {{ if $paginator.HasNext }}
+            <a href="{{ $paginator.Next.URL }}" class="pagination__link pagination__link--next">下一页 →</a>
+            {{ end }}
+        </nav>
+        {{ end }}
+    </div>
+</section>
+{{ end }}

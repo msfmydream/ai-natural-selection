@@ -1,0 +1,37 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">战术指令库</h1>
+        <p class="page-header__desc">收集整理高效的 AI 战术指令</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <!-- 筛选器 -->
+        <div class="filter-bar">
+            <div class="filter-bar__search">
+                <input type="text" id="promptSearch" placeholder="搜索战术指令..." class="filter-bar__input">
+                <button class="filter-bar__btn" onclick="searchPrompts()">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </button>
+            </div>
+            {{ if .Site.Taxonomies.prompt_categories }}
+            <div class="filter-bar__tags">
+                <button class="filter-bar__tag filter-bar__tag--active" data-filter="all">全部</button>
+                {{ range $name, $taxonomy := .Site.Taxonomies.prompt_categories }}
+                <button class="filter-bar__tag" data-filter="{{ $name }}">{{ $name }}</button>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+        
+        <!-- 提示词列表 -->
+        <div class="prompt-grid" id="promptGrid">
+            {{ range (where .Site.RegularPages "Section" "prompts") }}
+            {{ partial "prompt-card.html" . }}
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

@@ -1,0 +1,26 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">
+            {{ if eq .Data.Plural "tags" }}标签{{ end }}
+            {{ if eq .Data.Plural "categories" }}分类{{ end }}
+            {{ if eq .Data.Plural "prompt_tags" }}提示词标签{{ end }}
+            {{ if eq .Data.Plural "prompt_categories" }}提示词分类{{ end }}
+        </h1>
+        <p class="page-header__desc">共 {{ len .Data.Terms }} 个</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="tag-cloud tag-cloud--large">
+            {{ range .Data.Terms.ByCount }}
+            <a href="{{ .Page.Permalink }}" class="tag" style="font-size: {{ add 0.85 (mul 0.5 (div (float .Count) (len $.Data.Terms))) }}rem;">
+                {{ .Page.Title }}
+                <span class="tag__count">{{ .Count }}</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

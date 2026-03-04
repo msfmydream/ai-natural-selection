@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">{{ .Title }}</h1>
+        {{ if .Description }}
+        <p class="page-header__desc">{{ .Description }}</p>
+        {{ end }}
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="post-grid">
+            {{ range .Pages }}
+            {{ partial "post-card.html" . }}
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

@@ -1,0 +1,62 @@
+{{ define "main" }}
+<article class="prompt-detail">
+    <div class="container container--narrow">
+        <header class="prompt-detail__header">
+            <div class="prompt-detail__meta">
+                {{ if .Params.model }}
+                <span class="prompt-detail__model">
+                    <span class="prompt-detail__model-icon">🤖</span>
+                    {{ .Params.model }}
+                </span>
+                {{ end }}
+                {{ if .Params.version }}
+                <span class="prompt-detail__version">v{{ .Params.version }}</span>
+                {{ end }}
+                <time class="prompt-detail__date" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "2006年1月2日" }}
+                </time>
+            </div>
+            <h1 class="prompt-detail__title">{{ .Title }}</h1>
+            {{ if .Description }}
+            <p class="prompt-detail__desc">{{ .Description }}</p>
+            {{ end }}
+            {{ if .Params.prompt_tags }}
+            <div class="prompt-detail__tags">
+                {{ range .Params.prompt_tags }}
+                <a href="{{ "/prompt_tags/" | relURL }}{{ . | urlize }}" class="prompt-detail__tag">{{ . }}</a>
+                {{ end }}
+            </div>
+            {{ end }}
+        </header>
+        
+        <div class="prompt-detail__content">
+            {{ .Content }}
+        </div>
+        
+        <div class="prompt-detail__actions">
+            <button class="btn btn--primary" onclick="copyPrompt()">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                复制提示词
+            </button>
+            <span class="copy-hint" id="copyHint">已复制到剪贴板！</span>
+        </div>
+        
+        <footer class="prompt-detail__footer">
+            <nav class="prompt-detail__nav">
+                {{ with .PrevInSection }}
+                <a href="{{ .Permalink }}" class="prompt-detail__nav-link prompt-detail__nav-link--prev">
+                    <span class="prompt-detail__nav-label">← 上一个提示词</span>
+                    <span class="prompt-detail__nav-title">{{ .Title }}</span>
+                </a>
+                {{ end }}
+                {{ with .NextInSection }}
+                <a href="{{ .Permalink }}" class="prompt-detail__nav-link prompt-detail__nav-link--next">
+                    <span class="prompt-detail__nav-label">下一个提示词 →</span>
+                    <span class="prompt-detail__nav-title">{{ .Title }}</span>
+                </a>
+                {{ end }}
+            </nav>
+        </footer>
+    </div>
+</article>
+{{ end }}

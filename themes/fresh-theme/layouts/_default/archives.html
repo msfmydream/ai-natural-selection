@@ -1,0 +1,40 @@
+{{ define "main" }}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">航行记录</h1>
+        <p class="page-header__desc">共 {{ len (where .Site.RegularPages "Section" "posts") }} 篇航行日志</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container container--narrow">
+        {{ $posts := where .Site.RegularPages "Section" "posts" }}
+        {{ $grouped := $posts.GroupByDate "2006年" }}
+        
+        <div class="archives">
+            {{ range $grouped }}
+            <div class="archives__year">
+                <h2 class="archives__year-title">{{ .Key }}</h2>
+                <div class="archives__list">
+                    {{ range .Pages }}
+                    <article class="archives__item">
+                        <time class="archives__date" datetime="{{ .Date.Format "2006-01-02" }}">
+                            {{ .Date.Format "01-02" }}
+                        </time>
+                        <a href="{{ .Permalink }}" class="archives__link">{{ .Title }}</a>
+                        {{ if .Params.tags }}
+                        <div class="archives__tags">
+                            {{ range first 2 .Params.tags }}
+                            <span class="archives__tag">{{ . }}</span>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </article>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

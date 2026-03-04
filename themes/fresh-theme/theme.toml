@@ -1,0 +1,12 @@
+name = 'Fresh Theme'
+license = 'MIT'
+licenselink = 'https://github.com/yourname/fresh-theme/blob/main/LICENSE'
+description = 'A clean and fresh theme for personal blog and prompt management'
+homepage = 'https://your-domain.com'
+tags = ['blog', 'clean', 'minimal', 'responsive', 'prompts']
+features = ['responsive', 'archive', 'prompt-management']
+min_version = '0.112.0'
+
+[author]
+  name = 'You'
+  homepage = 'https://your-domain.com'

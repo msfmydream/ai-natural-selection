@@ -1,0 +1,56 @@
+baseURL = 'https://msfmydream.github.io/ai-natural-selection/'
+languageCode = 'zh-CN'
+title = '自然选择号'
+theme = 'fresh-theme'
+
+[params]
+  author = '舰长'
+  description = '在深空中记录思考，收藏战术指令'
+  keywords = ['博客', '三体', '提示词', 'AI', '科幻']
+  favicon = '/images/favicon.ico'
+  
+  # 社交媒体
+  github = ''
+  twitter = ''
+  email = ''
+
+[menu]
+  [[menu.main]]
+    name = '舰桥'
+    url = '/'
+    weight = 10
+  [[menu.main]]
+    name = '航行日志'
+    url = '/posts/'
+    weight = 20
+  [[menu.main]]
+    name = '战术指令'
+    url = '/prompts/'
+    weight = 30
+  [[menu.main]]
+    name = '航行记录'
+    url = '/archives/'
+    weight = 40
+  [[menu.main]]
+    name = '关于星舰'
+    url = '/about/'
+    weight = 50
+
+[permalinks]
+  posts = '/posts/:year/:month/:slug/'
+  prompts = '/prompts/:slug/'
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+  prompt_tag = 'prompt_tags'
+  prompt_category = 'prompt_categories'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = 'monokai'
+    lineNos = true
+    codeFences = true

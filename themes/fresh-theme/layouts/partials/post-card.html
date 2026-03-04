@@ -1,0 +1,30 @@
+<article class="post-card">
+    <a href="{{ .Permalink }}" class="post-card__link">
+        <div class="post-card__content">
+            <div class="post-card__meta">
+                <time class="post-card__date" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "2006年1月2日" }}
+                </time>
+                {{ if .Params.categories }}
+                <span class="post-card__category">{{ index .Params.categories 0 }}</span>
+                {{ end }}
+            </div>
+            <h3 class="post-card__title">{{ .Title }}</h3>
+            {{ if .Description }}
+            <p class="post-card__excerpt">{{ .Description }}</p>
+            {{ else }}
+            <p class="post-card__excerpt">{{ .Summary | truncate 120 }}</p>
+            {{ end }}
+            <div class="post-card__footer">
+                <span class="post-card__read">阅读更多</span>
+                {{ if .Params.tags }}
+                <div class="post-card__tags">
+                    {{ range first 2 .Params.tags }}
+                    <span class="post-card__tag">#{{ . }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </a>
+</article>

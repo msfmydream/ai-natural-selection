@@ -1,0 +1,96 @@
+{{ define "main" }}
+<section class="hero">
+    <div class="container">
+        <div class="hero__content">
+            <!-- 经典台词 -->
+            <div class="hero__quote">
+                <p class="hero__quote-text">自然选择，前进四！</p>
+                <p class="hero__quote-sub">NATURAL SELECTION, AHEAD FOUR</p>
+            </div>
+            
+            <h1 class="hero__title">{{ .Site.Params.author }}的星舰</h1>
+            <p class="hero__subtitle">{{ .Site.Params.description }}</p>
+            
+            <!-- 战舰状态面板 -->
+            <div class="hero__stats">
+                <div class="stat">
+                    <span class="stat__number">{{ len (where .Site.RegularPages "Section" "posts") }}</span>
+                    <span class="stat__label">航行日志</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number">{{ len (where .Site.RegularPages "Section" "prompts") }}</span>
+                    <span class="stat__label">战术指令</span>
+                </div>
+                <div class="stat">
+                    <span class="stat__number">{{ len .Site.Taxonomies.tags }}</span>
+                    <span class="stat__label">星图坐标</span>
+                </div>
+            </div>
+            
+            <!-- 推进器光效 -->
+            <div class="hero__engine">
+                <div class="engine-flame"></div>
+                <div class="engine-flame engine-flame--2"></div>
+                <div class="engine-flame engine-flame--3"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">最新航行日志</h2>
+            <a href="{{ "/posts/" | relURL }}" class="section__more">查看全部 →</a>
+        </div>
+        <div class="post-grid">
+            {{ range first 6 (where .Site.RegularPages "Section" "posts") }}
+            {{ partial "post-card.html" . }}
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="section section--alt">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">战术指令库</h2>
+            <a href="{{ "/prompts/" | relURL }}" class="section__more">查看全部 →</a>
+        </div>
+        <div class="prompt-grid">
+            {{ range first 4 (where .Site.RegularPages "Section" "prompts") }}
+            {{ partial "prompt-card.html" . }}
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">星图坐标</h2>
+        </div>
+        <div class="tag-cloud">
+            {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+            <a href="{{ "/tags/" | relURL }}{{ $name | urlize }}" class="tag">
+                {{ $name }}
+                <span class="tag__count">{{ len $taxonomy }}</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<!-- 三体名言展示 -->
+<section class="section section--quote">
+    <div class="container">
+        <div class="quote-block">
+            <div class="quote-block__icon">⚡</div>
+            <blockquote class="quote-block__text">
+                「弱小和无知不是生存的障碍，傲慢才是。」
+            </blockquote>
+            <cite class="quote-block__cite">—— 刘慈欣《三体》</cite>
+        </div>
+    </div>
+</section>
+{{ end }}
