@@ -1,5 +1,6 @@
 ---
 title: "用 LangChain 搭了个智能客服，上线一周后的总结"
+slug: langchain智能客服
 date: 2026-03-09T09:00:00+08:00
 draft: false
 tags: ["ai", "langchain", "llm", "rag"]

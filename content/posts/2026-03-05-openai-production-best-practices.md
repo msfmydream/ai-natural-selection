@@ -1,5 +1,6 @@
 ---
 title: "OpenAI 生产环境最佳实践指南（译）"
+slug: openai-production-best-practices
 date: 2026-03-05T01:01:06+08:00
 draft: false
 tags: ["ai", "openai", "生产环境", "最佳实践", "翻译搬运"]

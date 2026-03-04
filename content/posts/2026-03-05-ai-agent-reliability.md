@@ -1,5 +1,6 @@
 ---
 title: "AI Agent 可靠性：生产级系统的长期策略（译）"
+slug: ai-agent-reliability
 date: 2026-03-05T05:00:00+08:00
 draft: true
 tags: ["ai", "agent", "可靠性", "生产环境", "翻译搬运"]

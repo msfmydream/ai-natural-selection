@@ -1,5 +1,6 @@
 ---
 title: "使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）"
+slug: building-ai-agents
 date: 2026-03-05T04:00:00+08:00
 draft: true
 tags: ["ai", "openai", "langchain", "agent", "tutorial", "翻译搬运"]

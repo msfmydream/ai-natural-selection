@@ -1,5 +1,6 @@
 ---
 title: 'Hugo 快速入门指南'
+slug: hugo-tutorial
 date: '2026-03-02T15:30:00+08:00'
 draft: false
 tags: ['Hugo', '教程', '静态网站']

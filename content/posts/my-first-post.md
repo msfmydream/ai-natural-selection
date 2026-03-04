@@ -1,5 +1,6 @@
 ---
 title: '启航 - 自然选择号首次航行日志'
+slug: my-first-post
 date: '2026-03-03T10:00:00+08:00'
 draft: false
 tags: ['启航', 'Hugo', '三体']

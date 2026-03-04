@@ -1,5 +1,6 @@
 ---
 title: "读 Kubernetes Scheduler 源码的一些笔记"
+slug: k8s-scheduler源码笔记
 date: 2026-03-12T09:00:00+08:00
 draft: false
 tags: ["kubernetes", "源码", "scheduler"]

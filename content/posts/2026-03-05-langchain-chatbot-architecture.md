@@ -1,5 +1,6 @@
 ---
 title: "构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译）"
+slug: langchain-chatbot-architecture
 date: 2026-03-05T03:00:00+08:00
 draft: true
 tags: ["ai", "langchain", "chatbot", "openai", "rag", "翻译搬运"]

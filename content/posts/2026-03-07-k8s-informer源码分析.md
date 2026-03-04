@@ -1,5 +1,6 @@
 ---
 title: "Kubernetes Informer 源码阅读笔记"
+slug: k8s-informer源码分析
 date: 2026-03-07T09:00:00+08:00
 draft: false
 tags: ["kubernetes", "源码", "informer", "client-go"]
