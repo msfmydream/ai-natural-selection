@@ -1,8 +1,8 @@
 ---
 title: "构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译）"
 slug: langchain-chatbot-architecture
-date: 2026-03-05T03:00:00+08:00
-draft: true
+date: 2026-03-05T03:01:13+08:00
+draft: false
 tags: ["ai", "langchain", "chatbot", "openai", "rag", "翻译搬运"]
 categories: ["AI"]
 description: "翻译自 4Geeks Academy 的聊天机器人架构指南，详细介绍如何使用 LangChain 和 OpenAI 构建生产级对话系统"
