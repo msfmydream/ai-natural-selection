@@ -13,12 +13,14 @@
             
             <!-- 战舰状态面板 -->
             <div class="hero__stats">
+                {{ $postCount := len (where (where .Site.RegularPages "Type" "posts") "Draft" false) }}
+                {{ $promptCount := len (where (where .Site.RegularPages "Type" "prompts") "Draft" false) }}
                 <div class="stat">
-                    <span class="stat__number">{{ len (where .Site.RegularPages "Section" "posts") }}</span>
+                    <span class="stat__number">{{ $postCount }}</span>
                     <span class="stat__label">航行日志</span>
                 </div>
                 <div class="stat">
-                    <span class="stat__number">{{ len (where .Site.RegularPages "Section" "prompts") }}</span>
+                    <span class="stat__number">{{ $promptCount }}</span>
                     <span class="stat__label">战术指令</span>
                 </div>
                 <div class="stat">
@@ -44,7 +46,7 @@
             <a href="{{ "/posts/" | relURL }}" class="section__more">查看全部 →</a>
         </div>
         <div class="post-grid">
-            {{ range first 6 (where .Site.RegularPages "Section" "posts") }}
+            {{ range first 6 (where (where .Site.RegularPages "Type" "posts") "Draft" false) }}
             {{ partial "post-card.html" . }}
             {{ end }}
         </div>
@@ -58,7 +60,7 @@
             <a href="{{ "/prompts/" | relURL }}" class="section__more">查看全部 →</a>
         </div>
         <div class="prompt-grid">
-            {{ range first 4 (where .Site.RegularPages "Section" "prompts") }}
+            {{ range first 4 (where (where .Site.RegularPages "Type" "prompts") "Draft" false) }}
             {{ partial "prompt-card.html" . }}
             {{ end }}
         </div>

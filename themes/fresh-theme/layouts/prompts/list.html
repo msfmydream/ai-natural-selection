@@ -26,12 +26,20 @@
             {{ end }}
         </div>
         
+        {{ $pages := where (where .Site.RegularPages "Type" "prompts") "Draft" false }}
+        
+        {{ if gt (len $pages) 0 }}
         <!-- 提示词列表 -->
         <div class="prompt-grid" id="promptGrid">
-            {{ range (where .Site.RegularPages "Section" "prompts") }}
+            {{ range $pages }}
             {{ partial "prompt-card.html" . }}
             {{ end }}
         </div>
+        {{ else }}
+        <div class="empty-state">
+            <p>暂无战术指令</p>
+        </div>
+        {{ end }}
     </div>
 </section>
 {{ end }}
