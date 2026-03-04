@@ -2,7 +2,7 @@
 title: "AI Agent 可靠性：生产级系统的长期策略（译）"
 slug: ai-agent-reliability
 date: 2026-03-05T05:00:00+08:00
-draft: true
+draft: false
 tags: ["ai", "agent", "可靠性", "生产环境", "翻译搬运"]
 categories: ["AI"]
 description: "翻译自 Galileo AI 的生产级 AI Agent 可靠性指南，涵盖长期维护和系统稳定性策略"
