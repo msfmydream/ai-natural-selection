@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>代码审查 on 自然选择号</title><link>https://msfmydream.github.io/ai-natural-selection/prompt_tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5/</link><description>Recent content in 代码审查 on 自然选择号</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 02 Mar 2026 14:00:00 +0800</lastBuildDate><atom:link href="https://msfmydream.github.io/ai-natural-selection/prompt_tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5/index.xml" rel="self" type="application/rss+xml"/><item><title>代码审查助手</title><link>https://msfmydream.github.io/ai-natural-selection/prompts/%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E5%8A%A9%E6%89%8B/</link><pubDate>Mon, 02 Mar 2026 14:00:00 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/prompts/%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E5%8A%A9%E6%89%8B/</guid><description>&lt;h2 id="提示词内容">提示词内容&lt;/h2>
+&lt;pre tabindex="0">&lt;code>你是一位经验丰富的代码审查专家。请对以下代码进行审查，并按照以下维度进行分析：
+
+## 1. 代码质量
+- 代码可读性和可维护性
+- 命名规范是否清晰
+- 函数/类设计是否合理
+- 注释是否充分
+
+## 2. 潜在问题
+- 边界条件处理
+- 错误处理机制
+- 性能瓶颈
+- 安全风险（SQL注入、XSS等）
+- 内存泄漏风险
+
+## 3. 最佳实践
+- 是否符合语言/框架的最佳实践
+- 设计模式使用是否恰当
+- 是否符合 SOLID 原则
+
+## 4. 改进建议
+针对发现的问题，提供具体的改进代码示例。
+
+请使用以下格式输出：
+
+### 总体评价
+简要评价代码的整体质量（1-5星）
+
+### 详细分析
+[按照上述维度进行分析]
+
+### 改进后的代码
+&lt;/code>&lt;/pre>&lt;p>[提供改进后的代码]&lt;/p>
+&lt;pre tabindex="0">&lt;code>
+待审查代码：
+{{用户输入的代码}}
+&lt;/code>&lt;/pre>&lt;h2 id="使用说明">使用说明&lt;/h2>
+&lt;h3 id="适用场景">适用场景&lt;/h3>
+&lt;ul>
+&lt;li>团队代码审查&lt;/li>
+&lt;li>个人代码自查&lt;/li>
+&lt;li>学习代码最佳实践&lt;/li>
+&lt;li>面试代码评估&lt;/li>
+&lt;/ul>
+&lt;h3 id="使用方法">使用方法&lt;/h3>
+&lt;ol>
+&lt;li>复制提示词&lt;/li>
+&lt;li>将 &lt;code>{{用户输入的代码}}&lt;/code> 替换为实际代码&lt;/li>
+&lt;li>发送给 AI 进行审查&lt;/li>
+&lt;/ol>
+&lt;h3 id="配合使用的建议">配合使用的建议&lt;/h3>
+&lt;ul>
+&lt;li>可以同时提供代码的业务背景，帮助 AI 更好理解&lt;/li>
+&lt;li>对于大型代码库，建议分批审查&lt;/li>
+&lt;li>可以将 AI 的建议与自己的判断结合使用&lt;/li>
+&lt;/ul>
+&lt;h2 id="示例输出">示例输出&lt;/h2>
+&lt;p>&lt;strong>输入代码：&lt;/strong>&lt;/p></description></item></channel></rss>

@@ -1,0 +1,108 @@
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Hugo 快速入门指南 | 自然选择号</title>
+<meta name=description content="一份详细的 Hugo 静态网站生成器入门教程，帮助你快速搭建个人博客。"><meta name=keywords content="博客,三体,提示词,AI,科幻"><meta name=author content="舰长"><meta property="og:title" content="Hugo 快速入门指南"><meta property="og:description" content="一份详细的 Hugo 静态网站生成器入门教程，帮助你快速搭建个人博客。"><meta property="og:type" content="article"><meta property="og:url" content="https://msfmydream.github.io/ai-natural-selection/posts/2026/03/hugo-tutorial/"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel=stylesheet><link rel=stylesheet href=/ai-natural-selection/css/main.css></head><body><canvas id=starfield class=starfield></canvas><div class=wrapper><header class=header><div class=container><nav class=nav><a href=/ class=logo><span class=logo__icon>🚀</span>
+<span class=logo__text>自然选择号</span>
+</a><button class=nav__toggle aria-label="Toggle navigation" onclick=toggleNav()>
+<span></span>
+<span></span>
+<span></span></button><ul class=nav__menu id=navMenu><li class=nav__item><a href=/ai-natural-selection/ class=nav__link>舰桥</a></li><li class=nav__item><a href=/ai-natural-selection/posts/ class=nav__link>航行日志</a></li><li class=nav__item><a href=/ai-natural-selection/prompts/ class=nav__link>战术指令</a></li><li class=nav__item><a href=/ai-natural-selection/archives/ class=nav__link>航行记录</a></li><li class=nav__item><a href=/ai-natural-selection/about/ class=nav__link>关于星舰</a></li></ul></nav></div></header><main class=main><article class=article><div class="container container--narrow"><header class=article__header><div class=article__meta><time class=article__date datetime=2026-03-02>2026年3月2日
+</time><span class=article__category>技术</span></div><h1 class=article__title>Hugo 快速入门指南</h1><p class=article__description>一份详细的 Hugo 静态网站生成器入门教程，帮助你快速搭建个人博客。</p><div class=article__tags><a href=/tags/hugo class=article__tag>#Hugo</a>
+<a href=/tags/%E6%95%99%E7%A8%8B class=article__tag>#教程</a>
+<a href=/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99 class=article__tag>#静态网站</a></div></header><div class="article__content markdown-body"><h2 id=什么是-hugo>什么是 Hugo</h2><p>Hugo 是一个用 Go 语言编写的静态网站生成器。它使用 Markdown 文件作为内容源，通过模板引擎生成静态 HTML 文件。</p><h2 id=安装-hugo>安装 Hugo</h2><h3 id=windows>Windows</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=display:flex><span><span style=color:#75715e># 使用 Chocolatey</span>
+</span></span><span style=display:flex><span>choco install hugo-extended
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 或使用 Scoop</span>
+</span></span><span style=display:flex><span>scoop install hugo-extended
+</span></span></code></pre></td></tr></table></div></div><h3 id=macos>macOS</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 使用 Homebrew</span>
+</span></span><span style=display:flex><span>brew install hugo
+</span></span></code></pre></td></tr></table></div></div><h3 id=linux>Linux</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 使用 Snap</span>
+</span></span><span style=display:flex><span>snap install hugo
+</span></span></code></pre></td></tr></table></div></div><h2 id=创建新站点>创建新站点</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 创建新站点</span>
+</span></span><span style=display:flex><span>hugo new site myblog
+</span></span><span style=display:flex><span>cd myblog
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 添加主题</span>
+</span></span><span style=display:flex><span>git init
+</span></span><span style=display:flex><span>git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 配置主题</span>
+</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;theme = &#39;ananke&#39;&#34;</span> &gt;&gt; hugo.toml
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 创建内容</span>
+</span></span><span style=display:flex><span>hugo new posts/hello.md
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 本地预览</span>
+</span></span><span style=display:flex><span>hugo server -D
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 构建（输出到 public 目录）</span>
+</span></span><span style=display:flex><span>hugo
+</span></span></code></pre></td></tr></table></div></div><h2 id=目录结构>目录结构</h2><pre tabindex=0><code>myblog/
+├── archetypes/      # 内容模板
+├── assets/          # 需要处理的资源
+├── content/         # 网站内容
+├── data/            # 数据文件
+├── layouts/         # HTML 模板
+├── static/          # 静态文件
+├── themes/          # 主题
+└── hugo.toml        # 站点配置
+</code></pre><h2 id=常用命令>常用命令</h2><table><thead><tr><th>命令</th><th>说明</th></tr></thead><tbody><tr><td><code>hugo new site &lt;name></code></td><td>创建新站点</td></tr><tr><td><code>hugo new &lt;path></code></td><td>创建新内容</td></tr><tr><td><code>hugo server</code></td><td>启动开发服务器</td></tr><tr><td><code>hugo server -D</code></td><td>包含草稿</td></tr><tr><td><code>hugo</code></td><td>构建站点</td></tr><tr><td><code>hugo --minify</code></td><td>压缩构建</td></tr></tbody></table><h2 id=front-matter>Front Matter</h2><p>Front Matter 是内容文件顶部的元数据：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>---
+</span></span><span style=display:flex><span><span style=color:#f92672>title</span>: <span style=color:#e6db74>&#34;文章标题&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>date</span>: <span style=color:#e6db74>2026-03-03T10:00:00</span><span style=color:#ae81ff>+08</span>:<span style=color:#ae81ff>00</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>draft</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>tags</span>: [<span style=color:#e6db74>&#34;标签1&#34;</span>, <span style=color:#e6db74>&#34;标签2&#34;</span>]
+</span></span><span style=display:flex><span><span style=color:#f92672>categories</span>: [<span style=color:#e6db74>&#34;分类&#34;</span>]
+</span></span><span style=display:flex><span><span style=color:#f92672>description</span>: <span style=color:#e6db74>&#34;文章描述&#34;</span>
+</span></span><span style=display:flex><span>---
+</span></span></code></pre></td></tr></table></div></div><h2 id=部署>部署</h2><h3 id=github-pages>GitHub Pages</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 在 hugo.toml 中设置</span>
+</span></span><span style=display:flex><span>baseURL <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://username.github.io/repo-name/&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 构建</span>
+</span></span><span style=display:flex><span>hugo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 部署 public 目录到 gh-pages 分支</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=vercel>Vercel</h3><p>直接连接 GitHub 仓库，Vercel 会自动检测 Hugo 并部署。</p><h2 id=总结>总结</h2><p>Hugo 是一个非常强大的静态网站生成器，特别适合博客、文档等网站。它的构建速度极快，主题丰富，是搭建个人网站的优秀选择。</p><p>希望这篇教程对你有帮助！</p></div><footer class=article__footer><div class=article__share><span class=article__share-label>分享文章：</span>
+<button class=share-btn onclick=copyLink() title=复制链接><svg class="icon" viewBox="0 0 24 24" fill="currentcolor"><path d="M16 1H4c-1.1.0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1.0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1.0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div><nav class=article__nav><a href=https://msfmydream.github.io/ai-natural-selection/posts/2026/03/my-first-post/ class="article__nav-link article__nav-link--next"><span class=article__nav-label>下一篇 →</span>
+<span class=article__nav-title>启航 - 自然选择号首次航行日志</span></a></nav></footer></div></article></main><footer class=footer><div class=container><div class=footer__content><div class=footer__info><p class=footer__copyright>© 2026 舰长. All rights reserved.</p><p class=footer__powered>Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+with <a href=https://github.com/ target=_blank rel=noopener>Fresh Theme</a></p></div></div></div></footer></div><script src=/ai-natural-selection/js/main.js></script></body></html>

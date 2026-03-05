@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>最佳实践 on 自然选择号</title><link>https://msfmydream.github.io/ai-natural-selection/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link><description>Recent content in 最佳实践 on 自然选择号</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 05 Mar 2026 01:01:06 +0800</lastBuildDate><atom:link href="https://msfmydream.github.io/ai-natural-selection/tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.xml" rel="self" type="application/rss+xml"/><item><title>OpenAI 生产环境最佳实践指南（译）</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/openai-production-best-practices/</link><pubDate>Thu, 05 Mar 2026 01:01:06 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/openai-production-best-practices/</guid><description>&lt;blockquote>
+&lt;p>&lt;strong>本文翻译自&lt;/strong>：OpenAI API Documentation - Production Best Practices&lt;br>
+&lt;strong>原文链接&lt;/strong>：https://developers.openai.com/api/docs/guides/production-best-practices/&lt;br>
+&lt;strong>翻译说明&lt;/strong>：本文仅为学习交流目的翻译，版权归原作者所有&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;p>这份指南提供了一套全面的最佳实践，帮助你从原型过渡到生产环境。无论你是经验丰富的机器学习工程师还是刚刚入门的爱好者，这份指南都能为你提供成功部署应用所需的工具——从保护 API 访问到设计能够处理高流量的稳健架构。&lt;/p>
+&lt;h2 id="组织管理">组织管理&lt;/h2>
+&lt;p>登录 OpenAI 账户后，你可以在组织设置中找到组织名称和 ID。组织名称是用户界面中显示的组织标签，组织 ID 是可在 API 请求中使用的唯一标识符。&lt;/p>
+&lt;p>属于多个组织的用户可以通过传递 header 来指定哪个组织用于 API 请求。这些 API 请求的使用量将计入指定组织的配额。如果未提供 header，则将向默认组织计费。你可以在用户设置中更改默认组织。&lt;/p>
+&lt;h3 id="成员权限管理">成员权限管理&lt;/h3>
+&lt;p>你可以从团队页面邀请新成员加入组织。成员可以是&lt;strong>读者&lt;/strong>或&lt;strong>所有者&lt;/strong>：&lt;/p>
+&lt;p>&lt;strong>读者权限&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>可以进行 API 请求&lt;/li>
+&lt;li>可以查看基本的组织信息&lt;/li>
+&lt;li>可以创建、更新和删除组织中的资源（如 Assistants），除非另有说明&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>所有者权限&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>拥有读者的所有权限&lt;/li>
+&lt;li>可以修改账单信息&lt;/li>
+&lt;li>可以管理组织内的成员&lt;/li>
+&lt;/ul>
+&lt;h3 id="账单限额管理">账单限额管理&lt;/h3>
+&lt;p>输入账单信息后，OpenAI 会设置每月 100 美元的使用限额。随着你在平台上使用量的增加，从一级使用层迁移到另一级，你的配额限制会自动提高。你可以在账户设置的限额页面查看当前的使用限制。&lt;/p>
+&lt;p>如果你想在使用量超过特定金额时收到通知，可以通过使用限额页面设置通知阈值。&lt;/p>
+&lt;h2 id="项目分阶段管理">项目分阶段管理&lt;/h2>
+&lt;p>随着规模扩大，你可能需要为 staging 和 production 环境创建单独的项目。你可以在仪表板中创建这些项目，从而隔离开发和测试工作，避免意外干扰线上应用。你还可以限制用户对生产项目的访问，并为每个项目设置自定义的费率和支出限制。&lt;/p>
+&lt;h2 id="扩展架构设计">扩展架构设计&lt;/h2>
+&lt;p>当设计用于生产的应用程序或服务时，重要的是考虑如何扩展以满足流量需求。无论选择哪家云服务提供商，有几个关键领域需要考虑：&lt;/p>
+&lt;h3 id="水平扩展">水平扩展&lt;/h3>
+&lt;p>你可能需要水平扩展应用程序以容纳来自多个来源的请求。这可能涉及部署额外的服务器或容器来分配负载。如果选择这种类型的扩展，请确保你的架构设计能够处理多个节点，并且有机制在它们之间平衡负载。&lt;/p>
+&lt;h3 id="垂直扩展">垂直扩展&lt;/h3>
+&lt;p>另一种选择是垂直扩展应用程序，这意味着你可以增强单个节点的可用资源。这将涉及升级服务器的能力以处理额外的负载。如果选择这种类型的扩展，请确保你的应用程序设计能够利用这些额外资源。&lt;/p>
+&lt;h3 id="缓存策略">缓存策略&lt;/h3>
+&lt;p>通过存储经常访问的数据，你可以改善响应时间，而无需重复调用我们的 API。你的应用程序需要设计为尽可能使用缓存数据，并在添加新信息时使缓存失效。&lt;/p>
+&lt;p>有几种不同的方式可以实现这一点。例如，你可以将数据存储在数据库、文件系统或内存缓存中，具体取决于对你的应用程序最有意义的方式。&lt;/p>
+&lt;h3 id="负载均衡">负载均衡&lt;/h3>
+&lt;p>考虑使用负载均衡技术来确保请求均匀分布在可用服务器之间。这可能涉及在服务器前使用负载均衡器或使用 DNS 轮询。平衡负载将有助于提高性能并减少瓶颈。&lt;/p>
+&lt;h2 id="延迟优化策略">延迟优化策略&lt;/h2>
+&lt;h3 id="模型选择">模型选择&lt;/h3>
+&lt;p>我们的 API 提供不同级别的复杂性和通用性的模型。最强大的模型，如 &lt;code>gpt-5&lt;/code>，可以生成更复杂和多样化的完成，但它们也需要更长的时间来处理你的查询。&lt;/p></description></item></channel></rss>

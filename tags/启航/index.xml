@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>启航 on 自然选择号</title><link>https://msfmydream.github.io/ai-natural-selection/tags/%E5%90%AF%E8%88%AA/</link><description>Recent content in 启航 on 自然选择号</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 03 Mar 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://msfmydream.github.io/ai-natural-selection/tags/%E5%90%AF%E8%88%AA/index.xml" rel="self" type="application/rss+xml"/><item><title>启航 - 自然选择号首次航行日志</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/my-first-post/</link><pubDate>Tue, 03 Mar 2026 10:00:00 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/my-first-post/</guid><description>&lt;h2 id="舰长日志-001">舰长日志 #001&lt;/h2>
+&lt;p>&lt;strong>日期:&lt;/strong> 危机纪元元年&lt;br>
+&lt;strong>位置:&lt;/strong> 地球轨道，近地空间站&lt;br>
+&lt;strong>状态:&lt;/strong> 引擎正常，准备启航&lt;/p>
+&lt;p>这是自然选择号的首次航行日志。经过数日的建造和调试，这艘星舰终于准备完毕，即将驶入浩瀚的信息深空。&lt;/p>
+&lt;h2 id="星舰建造记录">星舰建造记录&lt;/h2>
+&lt;h3 id="为什么选择-hugo">为什么选择 Hugo&lt;/h3>
+&lt;p>在众多星际造船技术中，我选择了 &lt;strong>Hugo&lt;/strong> 来建造这艘星舰。原因如下：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>光速引擎&lt;/strong> - Hugo 用 Go 语言编写，构建速度极快，就像装备了曲率引擎&lt;/li>
+&lt;li>&lt;strong>单体式结构&lt;/strong> - 只需要一个可执行文件，结构简洁，维护方便&lt;/li>
+&lt;li>&lt;strong>丰富的蓝图库&lt;/strong> - 有大量现成的主题可以选择和改造&lt;/li>
+&lt;li>&lt;strong>Markdown 协议&lt;/strong> - 使用 Markdown 编写内容，简单直观，兼容性好&lt;/li>
+&lt;/ol>
+&lt;h3 id="星舰设计理念">星舰设计理念&lt;/h3>
+&lt;p>这艘星舰的设计灵感来自《三体》中的 &lt;strong>自然选择号&lt;/strong> 战舰：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>深空配色&lt;/strong> - 深空蓝、引擎青、星光白&lt;/li>
+&lt;li>&lt;strong>推进器光效&lt;/strong> - 模拟战舰引擎的蓝色光芒&lt;/li>
+&lt;li>&lt;strong>控制台界面&lt;/strong> - 类似战舰控制面板的 UI 设计&lt;/li>
+&lt;li>&lt;strong>星空背景&lt;/strong> - 动态的星空和超光速特效&lt;/li>
+&lt;/ul>
+&lt;h3 id="星舰系统清单">星舰系统清单&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>系统&lt;/th>
+ &lt;th>功能&lt;/th>
+ &lt;th>状态&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>航行日志&lt;/td>
+ &lt;td>文章发布与管理&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>战术指令库&lt;/td>
+ &lt;td>提示词管理&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>航行记录&lt;/td>
+ &lt;td>文章归档&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>星图坐标&lt;/td>
+ &lt;td>标签云&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="航行计划">航行计划&lt;/h2>
+&lt;p>接下来的航行计划：&lt;/p></description></item></channel></rss>

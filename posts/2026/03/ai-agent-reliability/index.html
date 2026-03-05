@@ -1,0 +1,327 @@
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>AI Agent 可靠性：生产级系统的长期策略（译） | 自然选择号</title>
+<meta name=description content="翻译自 Galileo AI 的生产级 AI Agent 可靠性指南，涵盖长期维护和系统稳定性策略"><meta name=keywords content="博客,三体,提示词,AI,科幻"><meta name=author content="舰长"><meta property="og:title" content="AI Agent 可靠性：生产级系统的长期策略（译）"><meta property="og:description" content="翻译自 Galileo AI 的生产级 AI Agent 可靠性指南，涵盖长期维护和系统稳定性策略"><meta property="og:type" content="article"><meta property="og:url" content="https://msfmydream.github.io/ai-natural-selection/posts/2026/03/ai-agent-reliability/"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel=stylesheet><link rel=stylesheet href=/ai-natural-selection/css/main.css></head><body><canvas id=starfield class=starfield></canvas><div class=wrapper><header class=header><div class=container><nav class=nav><a href=/ class=logo><span class=logo__icon>🚀</span>
+<span class=logo__text>自然选择号</span>
+</a><button class=nav__toggle aria-label="Toggle navigation" onclick=toggleNav()>
+<span></span>
+<span></span>
+<span></span></button><ul class=nav__menu id=navMenu><li class=nav__item><a href=/ai-natural-selection/ class=nav__link>舰桥</a></li><li class=nav__item><a href=/ai-natural-selection/posts/ class=nav__link>航行日志</a></li><li class=nav__item><a href=/ai-natural-selection/prompts/ class=nav__link>战术指令</a></li><li class=nav__item><a href=/ai-natural-selection/archives/ class=nav__link>航行记录</a></li><li class=nav__item><a href=/ai-natural-selection/about/ class=nav__link>关于星舰</a></li></ul></nav></div></header><main class=main><article class=article><div class="container container--narrow"><header class=article__header><div class=article__meta><time class=article__date datetime=2026-03-05>2026年3月5日
+</time><span class=article__category>AI</span></div><h1 class=article__title>AI Agent 可靠性：生产级系统的长期策略（译）</h1><p class=article__description>翻译自 Galileo AI 的生产级 AI Agent 可靠性指南，涵盖长期维护和系统稳定性策略</p><div class=article__tags><a href=/tags/ai class=article__tag>#ai</a>
+<a href=/tags/agent class=article__tag>#agent</a>
+<a href=/tags/%E5%8F%AF%E9%9D%A0%E6%80%A7 class=article__tag>#可靠性</a>
+<a href=/tags/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83 class=article__tag>#生产环境</a>
+<a href=/tags/%E7%BF%BB%E8%AF%91%E6%90%AC%E8%BF%90 class=article__tag>#翻译搬运</a></div></header><div class="article__content markdown-body"><blockquote><p><strong>本文翻译自</strong>：Galileo AI - AI Agent Reliability: The Playbook for Production-Ready Systems<br><strong>原文链接</strong>：https://galileo.ai/blog/ai-agent-reliability-strategies<br><strong>翻译说明</strong>：本文仅为学习交流目的翻译，版权归原作者所有</p></blockquote><hr><p>将 AI Agent 从原型推向生产环境不仅仅是工程挑战，更是一项运营要务。本文提供了一份全面的可靠性指南，帮助你的 Agent 在长期运行中保持稳定。</p><h2 id=为什么可靠性是核心>为什么可靠性是核心</h2><p>生产级 AI Agent 面临独特挑战：</p><ul><li><strong>非确定性</strong>：LLM 输出不是 100% 可预测的</li><li><strong>外部依赖</strong>：工具调用可能失败</li><li><strong>状态复杂性</strong>：长时间运行的对话需要状态管理</li><li><strong>用户期望</strong>：用户期待像人类一样的稳定性</li></ul><h2 id=可靠性支柱>可靠性支柱</h2><h3 id=1-输入验证和清理>1. 输入验证和清理</h3><p>所有用户输入都必须经过验证：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> pydantic <span style=color:#f92672>import</span> BaseModel, validator
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> re
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AgentInput</span>(BaseModel):
+</span></span><span style=display:flex><span>    query: str
+</span></span><span style=display:flex><span>    session_id: str
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@validator</span>(<span style=color:#e6db74>&#39;query&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>validate_query</span>(cls, v):
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 检查长度</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> len(v) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>2000</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>&#34;查询过长&#34;</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 检查注入攻击</span>
+</span></span><span style=display:flex><span>        dangerous_patterns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>r</span><span style=color:#e6db74>&#39;ignore\s+previous&#39;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>r</span><span style=color:#e6db74>&#39;system\s+prompt&#39;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>r</span><span style=color:#e6db74>&#39;you\s+are\s+now&#39;</span>
+</span></span><span style=display:flex><span>        ]
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> pattern <span style=color:#f92672>in</span> dangerous_patterns:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> re<span style=color:#f92672>.</span>search(pattern, v, re<span style=color:#f92672>.</span>IGNORECASE):
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>&#34;检测到潜在的安全问题&#34;</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> v
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-超时和重试策略>2. 超时和重试策略</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> tenacity <span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    retry,
+</span></span><span style=display:flex><span>    stop_after_attempt,
+</span></span><span style=display:flex><span>    wait_exponential,
+</span></span><span style=display:flex><span>    retry_if_exception_type
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> openai <span style=color:#f92672>import</span> RateLimitError, APIError
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReliableAgent</span>:
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@retry</span>(
+</span></span><span style=display:flex><span>        retry<span style=color:#f92672>=</span>retry_if_exception_type((RateLimitError, APIError)),
+</span></span><span style=display:flex><span>        stop<span style=color:#f92672>=</span>stop_after_attempt(<span style=color:#ae81ff>3</span>),
+</span></span><span style=display:flex><span>        wait<span style=color:#f92672>=</span>wait_exponential(multiplier<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, min<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>, max<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>llm_call_with_retry</span>(self, prompt: str):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> self<span style=color:#f92672>.</span>llm<span style=color:#f92672>.</span>ainvoke(prompt)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>execute_with_timeout</span>(self, task, timeout: int <span style=color:#f92672>=</span> <span style=color:#ae81ff>30</span>):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> asyncio<span style=color:#f92672>.</span>wait_for(task, timeout<span style=color:#f92672>=</span>timeout)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> asyncio<span style=color:#f92672>.</span>TimeoutError:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;error&#34;</span>: <span style=color:#e6db74>&#34;处理超时，请简化问题或稍后再试&#34;</span>
+</span></span><span style=display:flex><span>            }
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-断路器模式>3. 断路器模式</h3><p>防止级联故障：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> enum <span style=color:#f92672>import</span> Enum
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CircuitState</span>(Enum):
+</span></span><span style=display:flex><span>    CLOSED <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;closed&#34;</span>      <span style=color:#75715e># 正常</span>
+</span></span><span style=display:flex><span>    OPEN <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;open&#34;</span>          <span style=color:#75715e># 断开</span>
+</span></span><span style=display:flex><span>    HALF_OPEN <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;half_open&#34;</span>  <span style=color:#75715e># 试探</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CircuitBreaker</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, failure_threshold<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>, recovery_timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>30</span>):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>failure_threshold <span style=color:#f92672>=</span> failure_threshold
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>recovery_timeout <span style=color:#f92672>=</span> recovery_timeout
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>failure_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>last_failure_time <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>state <span style=color:#f92672>=</span> CircuitState<span style=color:#f92672>.</span>CLOSED
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>call</span>(self, func, <span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>state <span style=color:#f92672>==</span> CircuitState<span style=color:#f92672>.</span>OPEN:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> time<span style=color:#f92672>.</span>time() <span style=color:#f92672>-</span> self<span style=color:#f92672>.</span>last_failure_time <span style=color:#f92672>&gt;</span> self<span style=color:#f92672>.</span>recovery_timeout:
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>state <span style=color:#f92672>=</span> CircuitState<span style=color:#f92672>.</span>HALF_OPEN
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>Exception</span>(<span style=color:#e6db74>&#34;服务暂时不可用，请稍后再试&#34;</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            result <span style=color:#f92672>=</span> func(<span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>state <span style=color:#f92672>==</span> CircuitState<span style=color:#f92672>.</span>HALF_OPEN:
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>state <span style=color:#f92672>=</span> CircuitState<span style=color:#f92672>.</span>CLOSED
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>failure_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> result
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>failure_count <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>last_failure_time <span style=color:#f92672>=</span> time<span style=color:#f92672>.</span>time()
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>failure_count <span style=color:#f92672>&gt;=</span> self<span style=color:#f92672>.</span>failure_threshold:
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>state <span style=color:#f92672>=</span> CircuitState<span style=color:#f92672>.</span>OPEN
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>raise</span> e
+</span></span></code></pre></td></tr></table></div></div><h3 id=4-优雅降级>4. 优雅降级</h3><p>当主要功能不可用时提供替代方案：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DegradableAgent</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>query</span>(self, user_input: str):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 尝试完整 RAG 流程</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> self<span style=color:#f92672>.</span>full_rag_query(user_input)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> VectorStoreError:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 降级到简单 LLM 回答</span>
+</span></span><span style=display:flex><span>            logger<span style=color:#f92672>.</span>warning(<span style=color:#e6db74>&#34;Vector store unavailable, falling back to LLM&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> self<span style=color:#f92672>.</span>llm_fallback(user_input)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 最终降级到静态响应</span>
+</span></span><span style=display:flex><span>            logger<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Complete failure: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>static_fallback_response()
+</span></span></code></pre></td></tr></table></div></div><h2 id=监控和可观测性>监控和可观测性</h2><h3 id=关键指标>关键指标</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> prometheus_client <span style=color:#f92672>import</span> Counter, Histogram, Gauge
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 业务指标</span>
+</span></span><span style=display:flex><span>agent_requests <span style=color:#f92672>=</span> Counter(<span style=color:#e6db74>&#39;agent_requests_total&#39;</span>, <span style=color:#e6db74>&#39;Total requests&#39;</span>)
+</span></span><span style=display:flex><span>agent_success <span style=color:#f92672>=</span> Counter(<span style=color:#e6db74>&#39;agent_success_total&#39;</span>, <span style=color:#e6db74>&#39;Successful responses&#39;</span>)
+</span></span><span style=display:flex><span>agent_failure <span style=color:#f92672>=</span> Counter(<span style=color:#e6db74>&#39;agent_failure_total&#39;</span>, <span style=color:#e6db74>&#39;Failed responses&#39;</span>, [<span style=color:#e6db74>&#39;error_type&#39;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 性能指标</span>
+</span></span><span style=display:flex><span>agent_latency <span style=color:#f92672>=</span> Histogram(<span style=color:#e6db74>&#39;agent_latency_seconds&#39;</span>, <span style=color:#e6db74>&#39;Request latency&#39;</span>)
+</span></span><span style=display:flex><span>tool_latency <span style=color:#f92672>=</span> Histogram(<span style=color:#e6db74>&#39;tool_latency_seconds&#39;</span>, <span style=color:#e6db74>&#39;Tool call latency&#39;</span>, [<span style=color:#e6db74>&#39;tool_name&#39;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 质量指标</span>
+</span></span><span style=display:flex><span>user_satisfaction <span style=color:#f92672>=</span> Gauge(<span style=color:#e6db74>&#39;user_satisfaction_score&#39;</span>, <span style=color:#e6db74>&#39;User rating&#39;</span>)
+</span></span><span style=display:flex><span>hallucination_detected <span style=color:#f92672>=</span> Counter(<span style=color:#e6db74>&#39;hallucination_total&#39;</span>, <span style=color:#e6db74>&#39;Detected hallucinations&#39;</span>)
+</span></span></code></pre></td></tr></table></div></div><h3 id=追踪>追踪</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain.callbacks <span style=color:#f92672>import</span> OpenAICallbackHandler
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> logging
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AgentTracer</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>logger <span style=color:#f92672>=</span> logging<span style=color:#f92672>.</span>getLogger(<span style=color:#e6db74>&#34;agent.tracer&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>on_tool_start</span>(self, tool_name: str, input: str):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>info(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Tool started: </span><span style=color:#e6db74>{</span>tool_name<span style=color:#e6db74>}</span><span style=color:#e6db74>, input: </span><span style=color:#e6db74>{</span>input<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>on_tool_end</span>(self, tool_name: str, output: str, duration: float):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>info(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Tool completed: </span><span style=color:#e6db74>{</span>tool_name<span style=color:#e6db74>}</span><span style=color:#e6db74>, duration: </span><span style=color:#e6db74>{</span>duration<span style=color:#e6db74>}</span><span style=color:#e6db74>s&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>on_llm_start</span>(self, prompt: str):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>debug(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;LLM call started&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>on_llm_end</span>(self, response: str, tokens_used: int):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>logger<span style=color:#f92672>.</span>info(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;LLM call completed, tokens: </span><span style=color:#e6db74>{</span>tokens_used<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span></code></pre></td></tr></table></div></div><h2 id=持续改进流程>持续改进流程</h2><h3 id=1-数据收集>1. 数据收集</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FeedbackCollector</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>collect</span>(self, session_id: str, query: str, response: str, rating: int):
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 存储到数据库用于后续分析</span>
+</span></span><span style=display:flex><span>        feedback_record <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;timestamp&#34;</span>: datetime<span style=color:#f92672>.</span>now(),
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;session_id&#34;</span>: session_id,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;query&#34;</span>: query,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;response&#34;</span>: response,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;rating&#34;</span>: rating,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;metadata&#34;</span>: {
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;model_version&#34;</span>: self<span style=color:#f92672>.</span>model_version,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;tools_used&#34;</span>: self<span style=color:#f92672>.</span>get_tools_used(),
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>db<span style=color:#f92672>.</span>insert(feedback_record)
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-定期审查>2. 定期审查</h3><p>每周进行以下审查：</p><ul><li><strong>错误日志分析</strong>：识别常见失败模式</li><li><strong>用户反馈</strong>：分析低分评价的共同点</li><li><strong>性能指标</strong>：检查延迟和成功率趋势</li><li><strong>成本分析</strong>：优化高成本操作</li></ul><h3 id=3-ab-测试>3. A/B 测试</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ABTestAgent</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>variant_a <span style=color:#f92672>=</span> AgentA()
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>variant_b <span style=color:#f92672>=</span> AgentB()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>route</span>(self, user_id: str, query: str):
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 50/50 分流</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> hash(user_id) <span style=color:#f92672>%</span> <span style=color:#ae81ff>2</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> self<span style=color:#f92672>.</span>variant_a<span style=color:#f92672>.</span>query(query), <span style=color:#e6db74>&#34;A&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>await</span> self<span style=color:#f92672>.</span>variant_b<span style=color:#f92672>.</span>query(query), <span style=color:#e6db74>&#34;B&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=生产环境-checklist>生产环境 checklist</h2><h3 id=部署前>部署前</h3><ul><li><input disabled type=checkbox> 所有工具都有超时设置</li><li><input disabled type=checkbox> 实现了断路器</li><li><input disabled type=checkbox> 输入验证覆盖所有入口</li><li><input disabled type=checkbox> 错误处理策略完善</li><li><input disabled type=checkbox> 监控和告警配置完成</li><li><input disabled type=checkbox> 回滚计划就绪</li></ul><h3 id=部署后>部署后</h3><ul><li><input disabled type=checkbox> 监控关键指标 24 小时</li><li><input disabled type=checkbox> 收集用户反馈</li><li><input disabled type=checkbox> 进行负载测试</li><li><input disabled type=checkbox> 验证降级路径</li><li><input disabled type=checkbox> 检查成本趋势</li></ul><h2 id=常见陷阱>常见陷阱</h2><ol><li><strong>过度依赖单一模型</strong>：准备模型降级方案</li><li><strong>忽视长尾情况</strong>：测试边界输入</li><li><strong>缺乏可观测性</strong>：无法诊断生产问题</li><li><strong>状态管理不当</strong>：会话丢失或混淆</li><li><strong>成本失控</strong>：没有预算限制</li></ol><h2 id=总结>总结</h2><p>构建可靠的 AI Agent 需要：</p><ol><li><strong>防御性编程</strong>：假设一切都会失败</li><li><strong>全面监控</strong>：可见性是第一位的</li><li><strong>持续学习</strong>：从生产数据改进</li><li><strong>用户中心</strong>：可靠性是用户体验</li></ol><p>记住：生产环境不是实验室。用户不关心你的技术多先进，他们只关心它是否工作。</p><hr><p><em>本文翻译自 Galileo AI，仅供学习交流使用</em></p></div><footer class=article__footer><div class=article__share><span class=article__share-label>分享文章：</span>
+<button class=share-btn onclick=copyLink() title=复制链接><svg class="icon" viewBox="0 0 24 24" fill="currentcolor"><path d="M16 1H4c-1.1.0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1.0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1.0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div><nav class=article__nav><a href=https://msfmydream.github.io/ai-natural-selection/posts/2026/03/building-ai-agents/ class="article__nav-link article__nav-link--prev"><span class=article__nav-label>← 上一篇</span>
+<span class=article__nav-title>使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）</span></a></nav></footer></div></article></main><footer class=footer><div class=container><div class=footer__content><div class=footer__info><p class=footer__copyright>© 2026 舰长. All rights reserved.</p><p class=footer__powered>Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+with <a href=https://github.com/ target=_blank rel=noopener>Fresh Theme</a></p></div></div></div></footer></div><script src=/ai-natural-selection/js/main.js></script></body></html>

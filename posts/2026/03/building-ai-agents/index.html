@@ -1,0 +1,248 @@
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>使用 OpenAI GPT 和 LangChain 构建 AI Agent（译） | 自然选择号</title>
+<meta name=description content="翻译自 NetSet Software 的 AI Agent 构建指南，详细介绍如何使用 GPT 和 LangChain 开发智能代理"><meta name=keywords content="博客,三体,提示词,AI,科幻"><meta name=author content="舰长"><meta property="og:title" content="使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）"><meta property="og:description" content="翻译自 NetSet Software 的 AI Agent 构建指南，详细介绍如何使用 GPT 和 LangChain 开发智能代理"><meta property="og:type" content="article"><meta property="og:url" content="https://msfmydream.github.io/ai-natural-selection/posts/2026/03/building-ai-agents/"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel=stylesheet><link rel=stylesheet href=/ai-natural-selection/css/main.css></head><body><canvas id=starfield class=starfield></canvas><div class=wrapper><header class=header><div class=container><nav class=nav><a href=/ class=logo><span class=logo__icon>🚀</span>
+<span class=logo__text>自然选择号</span>
+</a><button class=nav__toggle aria-label="Toggle navigation" onclick=toggleNav()>
+<span></span>
+<span></span>
+<span></span></button><ul class=nav__menu id=navMenu><li class=nav__item><a href=/ai-natural-selection/ class=nav__link>舰桥</a></li><li class=nav__item><a href=/ai-natural-selection/posts/ class=nav__link>航行日志</a></li><li class=nav__item><a href=/ai-natural-selection/prompts/ class=nav__link>战术指令</a></li><li class=nav__item><a href=/ai-natural-selection/archives/ class=nav__link>航行记录</a></li><li class=nav__item><a href=/ai-natural-selection/about/ class=nav__link>关于星舰</a></li></ul></nav></div></header><main class=main><article class=article><div class="container container--narrow"><header class=article__header><div class=article__meta><time class=article__date datetime=2026-03-05>2026年3月5日
+</time><span class=article__category>AI</span></div><h1 class=article__title>使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）</h1><p class=article__description>翻译自 NetSet Software 的 AI Agent 构建指南，详细介绍如何使用 GPT 和 LangChain 开发智能代理</p><div class=article__tags><a href=/tags/ai class=article__tag>#ai</a>
+<a href=/tags/openai class=article__tag>#openai</a>
+<a href=/tags/langchain class=article__tag>#langchain</a>
+<a href=/tags/agent class=article__tag>#agent</a>
+<a href=/tags/tutorial class=article__tag>#tutorial</a>
+<a href=/tags/%E7%BF%BB%E8%AF%91%E6%90%AC%E8%BF%90 class=article__tag>#翻译搬运</a></div></header><div class="article__content markdown-body"><blockquote><p><strong>本文翻译自</strong>：NetSet Software - Building AI Agents with OpenAI&rsquo;s GPT and LangChain<br><strong>原文链接</strong>：https://www.netsetsoftware.com/insights/building-ai-agents-with-openais-gpt-and-langchain/<br><strong>翻译说明</strong>：本文仅为学习交流目的翻译，版权归原作者所有</p></blockquote><hr><p>AI Agent 正在改变软件的工作方式。本文介绍如何使用 OpenAI 的 GPT 模型和 LangChain 框架构建能够思考、决策和行动的 AI Agent。</p><h2 id=什么是-ai-agent>什么是 AI Agent</h2><p>AI Agent 是一种能够：</p><ul><li><strong>感知</strong>环境（接收输入）</li><li><strong>推理</strong>（使用 LLM 思考）</li><li><strong>行动</strong>（调用工具、执行操作）</li><li><strong>学习</strong>（从反馈中改进）</li></ul><p>的智能系统。</p><p>与传统软件不同，Agent 可以在没有明确编程的情况下解决复杂问题。</p><h2 id=开始使用工具和最佳实践>开始使用：工具和最佳实践</h2><p>即使你不是开发者，本节也可能对你理解开发 AI Agent 的关键要素有所帮助。</p><h3 id=开发步骤>开发步骤</h3><p><strong>1. 明确定义用例</strong></p><p>问自己：&ldquo;你的 Agent 是用于客户支持、数据分析还是任务自动化？&rdquo;</p><p>清晰的用例定义是成功的基础。</p><p><strong>2. 选择模型和提供商</strong></p><p>可以是 OpenAI 的 GPT-4，这是推理任务的强力选择。</p><p><strong>3. 设计 LangChain 流程</strong></p><p>使用 LangChain 的模块化架构设置 prompts、memory 和 tools。</p><p><strong>4. 集成 API 和工具</strong></p><p>使用 LangChain 的工具包装器或编写自定义函数。</p><p><strong>5. 测试和迭代</strong></p><p>使用真实世界的查询和数据来微调 Agent 的性能。</p><h3 id=技术栈>技术栈</h3><p>常见的 AI Agent 技术栈包括：</p><ul><li>Python</li><li>LangChain</li><li>OpenAI API</li><li>向量存储（Pinecone 或 FAISS）</li><li>部署平台（AWS 或 Vercel）</li></ul><h2 id=核心组件详解>核心组件详解</h2><h3 id=1-工具tools>1. 工具（Tools）</h3><p>工具是 Agent 可以调用的函数：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain.tools <span style=color:#f92672>import</span> BaseTool
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> pydantic <span style=color:#f92672>import</span> BaseModel, Field
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CalculatorInput</span>(BaseModel):
+</span></span><span style=display:flex><span>    expression: str <span style=color:#f92672>=</span> Field(description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;数学表达式，如 &#39;2 + 2&#39;&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CalculatorTool</span>(BaseTool):
+</span></span><span style=display:flex><span>    name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;calculator&#34;</span>
+</span></span><span style=display:flex><span>    description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;执行数学计算&#34;</span>
+</span></span><span style=display:flex><span>    args_schema <span style=color:#f92672>=</span> CalculatorInput
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_run</span>(self, expression: str):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> eval(expression)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_arun</span>(self, expression: str):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_run(expression)
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-记忆memory>2. 记忆（Memory）</h3><p>Agent 需要记住之前的交互：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain.memory <span style=color:#f92672>import</span> ConversationBufferMemory
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>memory <span style=color:#f92672>=</span> ConversationBufferMemory(
+</span></span><span style=display:flex><span>    memory_key<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;chat_history&#34;</span>,
+</span></span><span style=display:flex><span>    return_messages<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-prompt-模板>3. Prompt 模板</h3><p>定义 Agent 的行为和约束：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain.prompts <span style=color:#f92672>import</span> ChatPromptTemplate
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>prompt <span style=color:#f92672>=</span> ChatPromptTemplate<span style=color:#f92672>.</span>from_messages([
+</span></span><span style=display:flex><span>    (<span style=color:#e6db74>&#34;system&#34;</span>, <span style=color:#e6db74>&#34;&#34;&#34;你是一个有用的 AI 助手。你可以使用以下工具：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    </span><span style=color:#e6db74>{tools}</span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    遵循以下格式：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Question: 用户的问题
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Thought: 你应该始终思考要做什么
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Action: 要采取的行动
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Action Input: 行动的输入
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Observation: 行动的结果
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    ... (这个 Thought/Action/Action Input/Observation 可以重复 N 次)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Thought: 我现在知道最终答案
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Final Answer: 对原始问题的最终答案
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>),
+</span></span><span style=display:flex><span>    MessagesPlaceholder(variable_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;chat_history&#34;</span>),
+</span></span><span style=display:flex><span>    (<span style=color:#e6db74>&#34;human&#34;</span>, <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{input}</span><span style=color:#e6db74>&#34;</span>),
+</span></span><span style=display:flex><span>    MessagesPlaceholder(variable_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;agent_scratchpad&#34;</span>),
+</span></span><span style=display:flex><span>])
+</span></span></code></pre></td></tr></table></div></div><h2 id=构建完整的-agent>构建完整的 Agent</h2><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain_openai <span style=color:#f92672>import</span> ChatOpenAI
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain.agents <span style=color:#f92672>import</span> AgentExecutor, create_openai_functions_agent
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain.tools <span style=color:#f92672>import</span> Tool
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 初始化 LLM</span>
+</span></span><span style=display:flex><span>llm <span style=color:#f92672>=</span> ChatOpenAI(model<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;gpt-4&#34;</span>, temperature<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 定义工具</span>
+</span></span><span style=display:flex><span>tools <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>    Tool(
+</span></span><span style=display:flex><span>        name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;search&#34;</span>,
+</span></span><span style=display:flex><span>        func<span style=color:#f92672>=</span>search_function,
+</span></span><span style=display:flex><span>        description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;用于搜索互联网信息&#34;</span>
+</span></span><span style=display:flex><span>    ),
+</span></span><span style=display:flex><span>    Tool(
+</span></span><span style=display:flex><span>        name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;calculator&#34;</span>, 
+</span></span><span style=display:flex><span>        func<span style=color:#f92672>=</span>calculator_function,
+</span></span><span style=display:flex><span>        description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;用于数学计算&#34;</span>
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 创建 Agent</span>
+</span></span><span style=display:flex><span>agent <span style=color:#f92672>=</span> create_openai_functions_agent(llm, tools, prompt)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 创建执行器</span>
+</span></span><span style=display:flex><span>agent_executor <span style=color:#f92672>=</span> AgentExecutor(
+</span></span><span style=display:flex><span>    agent<span style=color:#f92672>=</span>agent,
+</span></span><span style=display:flex><span>    tools<span style=color:#f92672>=</span>tools,
+</span></span><span style=display:flex><span>    memory<span style=color:#f92672>=</span>memory,
+</span></span><span style=display:flex><span>    verbose<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 运行</span>
+</span></span><span style=display:flex><span>response <span style=color:#f92672>=</span> agent_executor<span style=color:#f92672>.</span>invoke({<span style=color:#e6db74>&#34;input&#34;</span>: <span style=color:#e6db74>&#34;北京今天的天气如何？需要带伞吗？&#34;</span>})
+</span></span><span style=display:flex><span>print(response[<span style=color:#e6db74>&#34;output&#34;</span>])
+</span></span></code></pre></td></tr></table></div></div><h2 id=agent-类型对比>Agent 类型对比</h2><table><thead><tr><th>Agent 类型</th><th>适用场景</th><th>特点</th></tr></thead><tbody><tr><td>OpenAI Functions</td><td>工具调用明确的场景</td><td>使用 GPT 的 function calling</td></tr><tr><td>ReAct</td><td>需要推理和行动的场景</td><td>交替进行思考和行动</td></tr><tr><td>Plan-and-Execute</td><td>复杂多步骤任务</td><td>先规划再执行</td></tr><tr><td>Self-Ask</td><td>需要分解问题的场景</td><td>自问自答链式思考</td></tr></tbody></table><h2 id=实际应用案例>实际应用案例</h2><h3 id=客户支持-agent>客户支持 Agent</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>customer_support_agent</span>():
+</span></span><span style=display:flex><span>    tools <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        Tool(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;search_kb&#34;</span>, func<span style=color:#f92672>=</span>search_kb, description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;搜索知识库&#34;</span>),
+</span></span><span style=display:flex><span>        Tool(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;check_order&#34;</span>, func<span style=color:#f92672>=</span>check_order, description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;查询订单状态&#34;</span>),
+</span></span><span style=display:flex><span>        Tool(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;create_ticket&#34;</span>, func<span style=color:#f92672>=</span>create_ticket, description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;创建工单&#34;</span>)
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    agent <span style=color:#f92672>=</span> create_openai_functions_agent(llm, tools, support_prompt)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> AgentExecutor(agent<span style=color:#f92672>=</span>agent, tools<span style=color:#f92672>=</span>tools)
+</span></span></code></pre></td></tr></table></div></div><h3 id=数据分析-agent>数据分析 Agent</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>data_analysis_agent</span>():
+</span></span><span style=display:flex><span>    tools <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        Tool(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;query_database&#34;</span>, func<span style=color:#f92672>=</span>query_db, description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;查询数据库&#34;</span>),
+</span></span><span style=display:flex><span>        Tool(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;generate_chart&#34;</span>, func<span style=color:#f92672>=</span>gen_chart, description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;生成图表&#34;</span>),
+</span></span><span style=display:flex><span>        Tool(name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;statistical_analysis&#34;</span>, func<span style=color:#f92672>=</span>stats_analysis, description<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;统计分析&#34;</span>)
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    agent <span style=color:#f92672>=</span> create_openai_functions_agent(llm, tools, analysis_prompt)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> AgentExecutor(agent<span style=color:#f92672>=</span>agent, tools<span style=color:#f92672>=</span>tools)
+</span></span></code></pre></td></tr></table></div></div><h2 id=最佳实践>最佳实践</h2><h3 id=1-工具设计>1. 工具设计</h3><ul><li>保持工具简单专注</li><li>提供清晰的描述</li><li>处理错误 gracefully</li><li>限制工具数量（通常 3-5 个最佳）</li></ul><h3 id=2-安全性>2. 安全性</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 输入验证</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>validate_input</span>(user_input: str) <span style=color:#f92672>-&gt;</span> bool:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 检查恶意输入</span>
+</span></span><span style=display:flex><span>    forbidden <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;ignore previous&#34;</span>, <span style=color:#e6db74>&#34;system prompt&#34;</span>]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#f92672>not</span> any(f <span style=color:#f92672>in</span> user_input<span style=color:#f92672>.</span>lower() <span style=color:#66d9ef>for</span> f <span style=color:#f92672>in</span> forbidden)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 输出过滤</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>sanitize_output</span>(output: str) <span style=color:#f92672>-&gt;</span> str:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 移除敏感信息</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> output<span style=color:#f92672>.</span>replace(API_KEY, <span style=color:#e6db74>&#34;***&#34;</span>)
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-监控>3. 监控</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain.callbacks <span style=color:#f92672>import</span> LangChainTracer
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>tracer <span style=color:#f92672>=</span> LangChainTracer()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>agent_executor <span style=color:#f92672>=</span> AgentExecutor(
+</span></span><span style=display:flex><span>    agent<span style=color:#f92672>=</span>agent,
+</span></span><span style=display:flex><span>    tools<span style=color:#f92672>=</span>tools,
+</span></span><span style=display:flex><span>    callbacks<span style=color:#f92672>=</span>[tracer]
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></td></tr></table></div></div><h2 id=常见挑战和解决方案>常见挑战和解决方案</h2><table><thead><tr><th>挑战</th><th>解决方案</th></tr></thead><tbody><tr><td>Agent 循环</td><td>设置最大迭代次数</td></tr><tr><td>工具选择错误</td><td>改进工具描述，添加示例</td></tr><tr><td>响应太慢</td><td>使用更快的模型，优化工具</td></tr><tr><td>成本过高</td><td>缓存结果，使用更便宜的模型</td></tr></tbody></table><h2 id=结论>结论</h2><p>GPT 和 LangChain 正在推动一些最先进的 AI Agent。语言智能与可操作工作流的结合使企业能够从静态工具转变为能够像人类一样思考、决策和行动的动态助手。</p><p>但技术的全部潜力只有在正确构建时才能实现。LangChain 和 OpenAI 是创建下一代 AI Agent 的最明智选择。</p><hr><p><em>本文翻译自 NetSet Software，仅供学习交流使用</em></p></div><footer class=article__footer><div class=article__share><span class=article__share-label>分享文章：</span>
+<button class=share-btn onclick=copyLink() title=复制链接><svg class="icon" viewBox="0 0 24 24" fill="currentcolor"><path d="M16 1H4c-1.1.0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1.0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1.0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div><nav class=article__nav><a href=https://msfmydream.github.io/ai-natural-selection/posts/2026/03/langchain-chatbot-architecture/ class="article__nav-link article__nav-link--prev"><span class=article__nav-label>← 上一篇</span>
+<span class=article__nav-title>构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译）</span>
+</a><a href=https://msfmydream.github.io/ai-natural-selection/posts/2026/03/ai-agent-reliability/ class="article__nav-link article__nav-link--next"><span class=article__nav-label>下一篇 →</span>
+<span class=article__nav-title>AI Agent 可靠性：生产级系统的长期策略（译）</span></a></nav></footer></div></article></main><footer class=footer><div class=container><div class=footer__content><div class=footer__info><p class=footer__copyright>© 2026 舰长. All rights reserved.</p><p class=footer__powered>Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+with <a href=https://github.com/ target=_blank rel=noopener>Fresh Theme</a></p></div></div></div></footer></div><script src=/ai-natural-selection/js/main.js></script></body></html>

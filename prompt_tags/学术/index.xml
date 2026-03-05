@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>学术 on 自然选择号</title><link>https://msfmydream.github.io/ai-natural-selection/prompt_tags/%E5%AD%A6%E6%9C%AF/</link><description>Recent content in 学术 on 自然选择号</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 03 Mar 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://msfmydream.github.io/ai-natural-selection/prompt_tags/%E5%AD%A6%E6%9C%AF/index.xml" rel="self" type="application/rss+xml"/><item><title>外星语言翻译模块 - 学术版</title><link>https://msfmydream.github.io/ai-natural-selection/prompts/%E5%A4%96%E6%98%9F%E8%AF%AD%E8%A8%80%E7%BF%BB%E8%AF%91%E6%A8%A1%E5%9D%97-%E5%AD%A6%E6%9C%AF%E7%89%88/</link><pubDate>Tue, 03 Mar 2026 12:00:00 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/prompts/%E5%A4%96%E6%98%9F%E8%AF%AD%E8%A8%80%E7%BF%BB%E8%AF%91%E6%A8%A1%E5%9D%97-%E5%AD%A6%E6%9C%AF%E7%89%88/</guid><description>&lt;h2 id="战术指令">战术指令&lt;/h2>
+&lt;pre tabindex="0">&lt;code>你是一位资深的外星语言翻译专家。请将以下中文内容翻译为英语，要求：
+
+1. 使用正式的学术英语风格
+2. 保持原文的逻辑结构和论证顺序
+3. 使用被动语态和第三人称，避免使用 &amp;#34;I&amp;#34;, &amp;#34;we&amp;#34; 等人称
+4. 术语翻译要准确，符合学科规范
+5. 句子结构要简洁清晰，避免过长从句
+6. 注意冠词、介词、单复数的使用
+7. 保持学术写作的中立性和客观性
+
+请直接输出翻译结果，不需要解释。
+
+待翻译内容：
+{{用户输入的内容}}
+&lt;/code>&lt;/pre>&lt;h2 id="使用场景">使用场景&lt;/h2>
+&lt;p>这个翻译模块适用于：&lt;/p>
+&lt;ul>
+&lt;li>向星际学术期刊投稿&lt;/li>
+&lt;li>与外星文明进行学术交流&lt;/li>
+&lt;li>撰写宇宙通用语的研究报告&lt;/li>
+&lt;li>制作星际 presentation&lt;/li>
+&lt;/ul>
+&lt;h3 id="使用方法">使用方法&lt;/h3>
+&lt;ol>
+&lt;li>将上述指令复制到 AI 通讯终端&lt;/li>
+&lt;li>将 &lt;code>{{用户输入的内容}}&lt;/code> 替换为实际内容&lt;/li>
+&lt;li>发送指令获取翻译结果&lt;/li>
+&lt;/ol>
+&lt;h3 id="注意事项">注意事项&lt;/h3>
+&lt;ul>
+&lt;li>对于专业术语较多的内容，建议先提供术语对照表&lt;/li>
+&lt;li>翻译后建议由母语者或专业编辑进行校对&lt;/li>
+&lt;li>不同学科领域可能有特定的写作风格要求&lt;/li>
+&lt;/ul>
+&lt;h2 id="示例输出">示例输出&lt;/h2>
+&lt;p>&lt;strong>输入：&lt;/strong>&lt;/p>
+&lt;blockquote>
+&lt;p>本文提出了一种新的深度学习模型，用于图像分类任务。实验结果表明，该方法在多个基准数据集上都取得了优异的性能。&lt;/p>&lt;/blockquote>
+&lt;p>&lt;strong>输出：&lt;/strong>&lt;/p>
+&lt;blockquote>
+&lt;p>This paper proposes a novel deep learning model for image classification tasks. Experimental results demonstrate that the proposed method achieves superior performance on multiple benchmark datasets.&lt;/p></description></item></channel></rss>

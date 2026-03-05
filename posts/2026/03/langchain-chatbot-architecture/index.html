@@ -1,0 +1,348 @@
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译） | 自然选择号</title>
+<meta name=description content="翻译自 4Geeks Academy 的聊天机器人架构指南，详细介绍如何使用 LangChain 和 OpenAI 构建生产级对话系统"><meta name=keywords content="博客,三体,提示词,AI,科幻"><meta name=author content="舰长"><meta property="og:title" content="构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译）"><meta property="og:description" content="翻译自 4Geeks Academy 的聊天机器人架构指南，详细介绍如何使用 LangChain 和 OpenAI 构建生产级对话系统"><meta property="og:type" content="article"><meta property="og:url" content="https://msfmydream.github.io/ai-natural-selection/posts/2026/03/langchain-chatbot-architecture/"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel=stylesheet><link rel=stylesheet href=/ai-natural-selection/css/main.css></head><body><canvas id=starfield class=starfield></canvas><div class=wrapper><header class=header><div class=container><nav class=nav><a href=/ class=logo><span class=logo__icon>🚀</span>
+<span class=logo__text>自然选择号</span>
+</a><button class=nav__toggle aria-label="Toggle navigation" onclick=toggleNav()>
+<span></span>
+<span></span>
+<span></span></button><ul class=nav__menu id=navMenu><li class=nav__item><a href=/ai-natural-selection/ class=nav__link>舰桥</a></li><li class=nav__item><a href=/ai-natural-selection/posts/ class=nav__link>航行日志</a></li><li class=nav__item><a href=/ai-natural-selection/prompts/ class=nav__link>战术指令</a></li><li class=nav__item><a href=/ai-natural-selection/archives/ class=nav__link>航行记录</a></li><li class=nav__item><a href=/ai-natural-selection/about/ class=nav__link>关于星舰</a></li></ul></nav></div></header><main class=main><article class=article><div class="container container--narrow"><header class=article__header><div class=article__meta><time class=article__date datetime=2026-03-05>2026年3月5日
+</time><span class=article__category>AI</span></div><h1 class=article__title>构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译）</h1><p class=article__description>翻译自 4Geeks Academy 的聊天机器人架构指南，详细介绍如何使用 LangChain 和 OpenAI 构建生产级对话系统</p><div class=article__tags><a href=/tags/ai class=article__tag>#ai</a>
+<a href=/tags/langchain class=article__tag>#langchain</a>
+<a href=/tags/chatbot class=article__tag>#chatbot</a>
+<a href=/tags/openai class=article__tag>#openai</a>
+<a href=/tags/rag class=article__tag>#rag</a>
+<a href=/tags/%E7%BF%BB%E8%AF%91%E6%90%AC%E8%BF%90 class=article__tag>#翻译搬运</a></div></header><div class="article__content markdown-body"><blockquote><p><strong>本文翻译自</strong>：4Geeks Academy - Building a Production-Ready Chatbot with LangChain and OpenAI<br><strong>原文链接</strong>：https://blog.4geeks.io/building-a-production-ready-chatbot-with-langchain-and-openai-an-architectural-deep-dive/<br><strong>翻译说明</strong>：本文仅为学习交流目的翻译，版权归原作者所有</p></blockquote><hr><p>本文提供了一份详细的、以实现为重点的指南，介绍如何使用 LangChain 和 OpenAI 构建复杂的聊天机器人。我们将超越简单的 &ldquo;Hello World&rdquo; 示例，深入探讨生产就绪架构的核心组件。</p><h2 id=有状态的对话链>有状态的对话链</h2><h3 id=构建对话链>构建对话链</h3><p>现代聊天机器人需要记住对话历史。LangChain 的 <code>RunnableWithMessageHistory</code> 是一个强大的抽象，它自动处理给定会话 ID 的消息加载和保存。</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> dotenv <span style=color:#f92672>import</span> load_dotenv
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_openai <span style=color:#f92672>import</span> ChatOpenAI
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_core.prompts <span style=color:#f92672>import</span> ChatPromptTemplate, MessagesPlaceholder
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain.memory <span style=color:#f92672>import</span> ConversationBufferMemory
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_core.runnables.history <span style=color:#f92672>import</span> RunnableWithMessageHistory
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 加载环境变量</span>
+</span></span><span style=display:flex><span>load_dotenv()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 确保 API key 可用</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#e6db74>&#34;OPENAI_API_KEY&#34;</span> <span style=color:#f92672>not</span> <span style=color:#f92672>in</span> os<span style=color:#f92672>.</span>environ:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>&#34;OPENAI_API_KEY not found in environment variables.&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 1. 初始化 LLM</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 我们使用特定模型，并将 temperature 设置为 0.7</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 在创造性和可预测性之间取得平衡</span>
+</span></span><span style=display:flex><span>llm <span style=color:#f92672>=</span> ChatOpenAI(model<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;gpt-4o&#34;</span>, temperature<span style=color:#f92672>=</span><span style=color:#ae81ff>0.7</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 2. 定义 Prompt 模板</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这个模板指示 AI 的角色和行为</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># `MessagesPlaceholder` 是关键组件，告诉链在哪里注入对话历史</span>
+</span></span><span style=display:flex><span>prompt <span style=color:#f92672>=</span> ChatPromptTemplate<span style=color:#f92672>.</span>from_messages([
+</span></span><span style=display:flex><span>    (<span style=color:#e6db74>&#34;system&#34;</span>, <span style=color:#e6db74>&#34;你是一个有帮助的 AI 助手。你提供简洁准确的答案。&#34;</span>),
+</span></span><span style=display:flex><span>    MessagesPlaceholder(variable_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;history&#34;</span>),
+</span></span><span style=display:flex><span>    (<span style=color:#e6db74>&#34;human&#34;</span>, <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{input}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 3. 实例化对话记忆</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 我们使用简单的内存缓冲区。对于生产环境，你需要替换为持久化存储</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 如 Redis 或数据库</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># `chat_history` 是映射到 MessagesPlaceholder 的 key</span>
+</span></span><span style=display:flex><span>demo_memory <span style=color:#f92672>=</span> ConversationBufferMemory(memory_key<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;history&#34;</span>, return_messages<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 4. 构建带有消息历史的 Runnable Chain</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这结合了 prompt、LLM 和记忆管理</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># RunnableWithMessageHistory 类自动处理加载和保存消息</span>
+</span></span><span style=display:flex><span>conversational_chain <span style=color:#f92672>=</span> RunnableWithMessageHistory(
+</span></span><span style=display:flex><span>    prompt <span style=color:#f92672>|</span> llm,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>lambda</span> session_id: demo_memory,
+</span></span><span style=display:flex><span>    input_messages_key<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;input&#34;</span>,
+</span></span><span style=display:flex><span>    history_messages_key<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;history&#34;</span>,
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 5. 与链交互</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># `config` 字典对于有状态操作至关重要</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 我们传递 `session_id` 确保消息为正确的对话存储和检索</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>chat</span>(session_id: str, user_input: str):
+</span></span><span style=display:flex><span>    response <span style=color:#f92672>=</span> conversational_chain<span style=color:#f92672>.</span>invoke(
+</span></span><span style=display:flex><span>        {<span style=color:#e6db74>&#34;input&#34;</span>: user_input},
+</span></span><span style=display:flex><span>        config<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;configurable&#34;</span>: {<span style=color:#e6db74>&#34;session_id&#34;</span>: session_id}}
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;AI: </span><span style=color:#e6db74>{</span>response<span style=color:#f92672>.</span>content<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># --- 演示对话 ---</span>
+</span></span><span style=display:flex><span>session_a <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;user_123&#34;</span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;--- 开始与 Session A 的对话 ---&#34;</span>)
+</span></span><span style=display:flex><span>chat(session_a, <span style=color:#e6db74>&#34;你好！我叫 Alex。&#34;</span>)
+</span></span><span style=display:flex><span>chat(session_a, <span style=color:#e6db74>&#34;LangChain 的主要用途是什么？&#34;</span>)
+</span></span><span style=display:flex><span>chat(session_a, <span style=color:#e6db74>&#34;你记得我的名字吗？&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># --- 用不同 session 验证隔离 ---</span>
+</span></span><span style=display:flex><span>session_b <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;user_456&#34;</span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>--- 开始与 Session B 的对话 ---&#34;</span>)
+</span></span><span style=display:flex><span>chat(session_b, <span style=color:#e6db74>&#34;你知道我的名字吗？&#34;</span>)
+</span></span></code></pre></td></tr></table></div></div><h2 id=高级能力检索增强生成rag>高级能力：检索增强生成（RAG）</h2><p>对于需要访问特定领域知识的聊天机器人，RAG 架构是必不可少的。</p><h3 id=构建-rag-链>构建 RAG 链</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> dotenv <span style=color:#f92672>import</span> load_dotenv
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_openai <span style=color:#f92672>import</span> ChatOpenAI, OpenAIEmbeddings
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_community.document_loaders <span style=color:#f92672>import</span> PyPDFLoader
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_text_splitters <span style=color:#f92672>import</span> RecursiveCharacterTextSplitter
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_community.vectorstores <span style=color:#f92672>import</span> FAISS
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain.chains.combine_documents <span style=color:#f92672>import</span> create_stuff_documents_chain
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain_core.prompts <span style=color:#f92672>import</span> ChatPromptTemplate
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> langchain.chains <span style=color:#f92672>import</span> create_retrieval_chain
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># --- 设置 ---</span>
+</span></span><span style=display:flex><span>load_dotenv()
+</span></span><span style=display:flex><span>llm <span style=color:#f92672>=</span> ChatOpenAI(model<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;gpt-4o&#34;</span>)
+</span></span><span style=display:flex><span>embeddings <span style=color:#f92672>=</span> OpenAIEmbeddings()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># --- 创建测试 PDF ---</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 在实际项目中，这将是现有文档</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 为示例，你需要一个名为 &#39;sample_document.pdf&#39; 的文件</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 假设它包含关于 &#34;Project Titan 是一个专注于量子计算的新项目&#34; 的文本</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 1. 加载和处理文档</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 使用 loader 从源摄取数据</span>
+</span></span><span style=display:flex><span>loader <span style=color:#f92672>=</span> PyPDFLoader(<span style=color:#e6db74>&#34;sample_document.pdf&#34;</span>)
+</span></span><span style=display:flex><span>docs <span style=color:#f92672>=</span> loader<span style=color:#f92672>.</span>load()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 将文档分割成小块</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># chunk_size 和 chunk_overlap 是需要为特定数据调整的参数</span>
+</span></span><span style=display:flex><span>text_splitter <span style=color:#f92672>=</span> RecursiveCharacterTextSplitter(chunk_size<span style=color:#f92672>=</span><span style=color:#ae81ff>1000</span>, chunk_overlap<span style=color:#f92672>=</span><span style=color:#ae81ff>200</span>)
+</span></span><span style=display:flex><span>split_docs <span style=color:#f92672>=</span> text_splitter<span style=color:#f92672>.</span>split_documents(docs)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 2. 创建向量存储</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这一步涉及为每个文档块创建 embedding</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 并存储在 FAISS 向量存储中以供快速检索</span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;创建向量存储...&#34;</span>)
+</span></span><span style=display:flex><span>vector_store <span style=color:#f92672>=</span> FAISS<span style=color:#f92672>.</span>from_documents(split_docs, embeddings)
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;向量存储创建完成。&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 3. 创建检索链</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这个链将编排 RAG 过程</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># a. 为 LLM 定义 prompt</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 它包含一个 {context} 占位符，检索到的文档将被注入此处</span>
+</span></span><span style=display:flex><span>rag_prompt <span style=color:#f92672>=</span> ChatPromptTemplate<span style=color:#f92672>.</span>from_template(<span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>仅基于提供的上下文回答以下问题：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;context&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74></span><span style=color:#e6db74>{context}</span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&lt;/context&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>问题：</span><span style=color:#e6db74>{input}</span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># b. 创建文档组合链</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这个链接收用户问题和检索到的文档</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 并将它们填充到最终的 prompt 中</span>
+</span></span><span style=display:flex><span>question_answer_chain <span style=color:#f92672>=</span> create_stuff_documents_chain(llm, rag_prompt)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># c. 创建完整的检索链</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这个链接收用户输入，传递给检索器获取相关文档</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 然后将这些文档和输入传递给 question_answer_chain</span>
+</span></span><span style=display:flex><span>retriever <span style=color:#f92672>=</span> vector_store<span style=color:#f92672>.</span>as_retriever()
+</span></span><span style=display:flex><span>retrieval_chain <span style=color:#f92672>=</span> create_retrieval_chain(retriever, question_answer_chain)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 4. 调用 RAG 链</span>
+</span></span><span style=display:flex><span>user_question <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;什么是 Project Titan？&#34;</span>
+</span></span><span style=display:flex><span>response <span style=color:#f92672>=</span> retrieval_chain<span style=color:#f92672>.</span>invoke({<span style=color:#e6db74>&#34;input&#34;</span>: user_question})
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 响应是包含 input、context 和 answer 的字典</span>
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>--- RAG 响应 ---&#34;</span>)
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;问题：</span><span style=color:#e6db74>{</span>user_question<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;答案：</span><span style=color:#e6db74>{</span>response[<span style=color:#e6db74>&#39;answer&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e># 你也可以查看检索到的文档</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># print(f&#34;检索到的上下文：{response[&#39;context&#39;]}&#34;)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=架构设计要点>架构设计要点</h2><h3 id=1-状态管理>1. 状态管理</h3><p>生产级聊天机器人需要持久化状态：</p><ul><li><strong>内存存储</strong>：开发测试使用</li><li><strong>Redis</strong>：高性能会话存储</li><li><strong>PostgreSQL</strong>：复杂查询和长期分析</li><li><strong>向量数据库</strong>：RAG 知识检索</li></ul><h3 id=2-错误处理>2. 错误处理</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain_core.runnables <span style=color:#f92672>import</span> RunnableConfig
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>safe_chat</span>(session_id: str, input: str):
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        config <span style=color:#f92672>=</span> RunnableConfig(configurable<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;session_id&#34;</span>: session_id})
+</span></span><span style=display:flex><span>        result <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> chain<span style=color:#f92672>.</span>ainvoke({<span style=color:#e6db74>&#34;input&#34;</span>: input}, config<span style=color:#f92672>=</span>config)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> {<span style=color:#e6db74>&#34;success&#34;</span>: <span style=color:#66d9ef>True</span>, <span style=color:#e6db74>&#34;response&#34;</span>: result}
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 记录错误，返回友好消息</span>
+</span></span><span style=display:flex><span>        logger<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Chat error: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;success&#34;</span>: <span style=color:#66d9ef>False</span>, 
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;error&#34;</span>: <span style=color:#e6db74>&#34;抱歉，我遇到了技术问题。请稍后再试。&#34;</span>
+</span></span><span style=display:flex><span>        }
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-流式响应>3. 流式响应</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>async</span> <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>stream_chat</span>(session_id: str, input: str):
+</span></span><span style=display:flex><span>    config <span style=color:#f92672>=</span> RunnableConfig(configurable<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#34;session_id&#34;</span>: session_id})
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>async</span> <span style=color:#66d9ef>for</span> chunk <span style=color:#f92672>in</span> chain<span style=color:#f92672>.</span>astream({<span style=color:#e6db74>&#34;input&#34;</span>: input}, config<span style=color:#f92672>=</span>config):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>yield</span> chunk<span style=color:#f92672>.</span>content
+</span></span></code></pre></td></tr></table></div></div><h3 id=4-多模态支持>4. 多模态支持</h3><p>GPT-4o 支持图像输入：</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> langchain_core.messages <span style=color:#f92672>import</span> HumanMessage
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>message <span style=color:#f92672>=</span> HumanMessage(
+</span></span><span style=display:flex><span>    content<span style=color:#f92672>=</span>[
+</span></span><span style=display:flex><span>        {<span style=color:#e6db74>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;text&#34;</span>, <span style=color:#e6db74>&#34;text&#34;</span>: <span style=color:#e6db74>&#34;描述这张图片&#34;</span>},
+</span></span><span style=display:flex><span>        {<span style=color:#e6db74>&#34;type&#34;</span>: <span style=color:#e6db74>&#34;image_url&#34;</span>, <span style=color:#e6db74>&#34;image_url&#34;</span>: {<span style=color:#e6db74>&#34;url&#34;</span>: image_url}}
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></td></tr></table></div></div><h2 id=生产环境-checklist>生产环境 checklist</h2><ul><li><input disabled type=checkbox> 使用持久化存储替代内存存储</li><li><input disabled type=checkbox> 实现速率限制和访问控制</li><li><input disabled type=checkbox> 添加全面的日志和监控</li><li><input disabled type=checkbox> 设置自动扩缩容</li><li><input disabled type=checkbox> 实现熔断和降级策略</li><li><input disabled type=checkbox> 进行安全审计（提示注入、数据泄露）</li><li><input disabled type=checkbox> 建立 CI/CD 流程</li></ul><hr><p><em>本文翻译自 4Geeks Academy，仅供学习交流使用</em></p></div><footer class=article__footer><div class=article__share><span class=article__share-label>分享文章：</span>
+<button class=share-btn onclick=copyLink() title=复制链接><svg class="icon" viewBox="0 0 24 24" fill="currentcolor"><path d="M16 1H4c-1.1.0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1.0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1.0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div><nav class=article__nav><a href=https://msfmydream.github.io/ai-natural-selection/posts/2026/03/production-ai-agents/ class="article__nav-link article__nav-link--prev"><span class=article__nav-label>← 上一篇</span>
+<span class=article__nav-title>构建生产级 AI Agent：LangChain 实战指南（译）</span>
+</a><a href=https://msfmydream.github.io/ai-natural-selection/posts/2026/03/building-ai-agents/ class="article__nav-link article__nav-link--next"><span class=article__nav-label>下一篇 →</span>
+<span class=article__nav-title>使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）</span></a></nav></footer></div></article></main><footer class=footer><div class=container><div class=footer__content><div class=footer__info><p class=footer__copyright>© 2026 舰长. All rights reserved.</p><p class=footer__powered>Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+with <a href=https://github.com/ target=_blank rel=noopener>Fresh Theme</a></p></div></div></div></footer></div><script src=/ai-natural-selection/js/main.js></script></body></html>

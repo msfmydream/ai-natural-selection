@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Openai on 自然选择号</title><link>https://msfmydream.github.io/ai-natural-selection/tags/openai/</link><description>Recent content in Openai on 自然选择号</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 05 Mar 2026 04:00:00 +0800</lastBuildDate><atom:link href="https://msfmydream.github.io/ai-natural-selection/tags/openai/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 OpenAI GPT 和 LangChain 构建 AI Agent（译）</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/building-ai-agents/</link><pubDate>Thu, 05 Mar 2026 04:00:00 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/building-ai-agents/</guid><description>&lt;blockquote>
+&lt;p>&lt;strong>本文翻译自&lt;/strong>：NetSet Software - Building AI Agents with OpenAI&amp;rsquo;s GPT and LangChain&lt;br>
+&lt;strong>原文链接&lt;/strong>：https://www.netsetsoftware.com/insights/building-ai-agents-with-openais-gpt-and-langchain/&lt;br>
+&lt;strong>翻译说明&lt;/strong>：本文仅为学习交流目的翻译，版权归原作者所有&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;p>AI Agent 正在改变软件的工作方式。本文介绍如何使用 OpenAI 的 GPT 模型和 LangChain 框架构建能够思考、决策和行动的 AI Agent。&lt;/p>
+&lt;h2 id="什么是-ai-agent">什么是 AI Agent&lt;/h2>
+&lt;p>AI Agent 是一种能够：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>感知&lt;/strong>环境（接收输入）&lt;/li>
+&lt;li>&lt;strong>推理&lt;/strong>（使用 LLM 思考）&lt;/li>
+&lt;li>&lt;strong>行动&lt;/strong>（调用工具、执行操作）&lt;/li>
+&lt;li>&lt;strong>学习&lt;/strong>（从反馈中改进）&lt;/li>
+&lt;/ul>
+&lt;p>的智能系统。&lt;/p>
+&lt;p>与传统软件不同，Agent 可以在没有明确编程的情况下解决复杂问题。&lt;/p>
+&lt;h2 id="开始使用工具和最佳实践">开始使用：工具和最佳实践&lt;/h2>
+&lt;p>即使你不是开发者，本节也可能对你理解开发 AI Agent 的关键要素有所帮助。&lt;/p>
+&lt;h3 id="开发步骤">开发步骤&lt;/h3>
+&lt;p>&lt;strong>1. 明确定义用例&lt;/strong>&lt;/p>
+&lt;p>问自己：&amp;ldquo;你的 Agent 是用于客户支持、数据分析还是任务自动化？&amp;rdquo;&lt;/p>
+&lt;p>清晰的用例定义是成功的基础。&lt;/p>
+&lt;p>&lt;strong>2. 选择模型和提供商&lt;/strong>&lt;/p>
+&lt;p>可以是 OpenAI 的 GPT-4，这是推理任务的强力选择。&lt;/p>
+&lt;p>&lt;strong>3. 设计 LangChain 流程&lt;/strong>&lt;/p>
+&lt;p>使用 LangChain 的模块化架构设置 prompts、memory 和 tools。&lt;/p>
+&lt;p>&lt;strong>4. 集成 API 和工具&lt;/strong>&lt;/p></description></item><item><title>构建生产就绪的聊天机器人：LangChain + OpenAI 架构深度解析（译）</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/langchain-chatbot-architecture/</link><pubDate>Thu, 05 Mar 2026 03:01:13 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/langchain-chatbot-architecture/</guid><description>&lt;blockquote>
+&lt;p>&lt;strong>本文翻译自&lt;/strong>：4Geeks Academy - Building a Production-Ready Chatbot with LangChain and OpenAI&lt;br>
+&lt;strong>原文链接&lt;/strong>：https://blog.4geeks.io/building-a-production-ready-chatbot-with-langchain-and-openai-an-architectural-deep-dive/&lt;br>
+&lt;strong>翻译说明&lt;/strong>：本文仅为学习交流目的翻译，版权归原作者所有&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;p>本文提供了一份详细的、以实现为重点的指南，介绍如何使用 LangChain 和 OpenAI 构建复杂的聊天机器人。我们将超越简单的 &amp;ldquo;Hello World&amp;rdquo; 示例，深入探讨生产就绪架构的核心组件。&lt;/p>
+&lt;h2 id="有状态的对话链">有状态的对话链&lt;/h2>
+&lt;h3 id="构建对话链">构建对话链&lt;/h3>
+&lt;p>现代聊天机器人需要记住对话历史。LangChain 的 &lt;code>RunnableWithMessageHistory&lt;/code> 是一个强大的抽象，它自动处理给定会话 ID 的消息加载和保存。&lt;/p>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> os
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> dotenv &lt;span style="color:#f92672">import&lt;/span> load_dotenv
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> langchain_openai &lt;span style="color:#f92672">import&lt;/span> ChatOpenAI
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> langchain_core.prompts &lt;span style="color:#f92672">import&lt;/span> ChatPromptTemplate, MessagesPlaceholder
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> langchain.memory &lt;span style="color:#f92672">import&lt;/span> ConversationBufferMemory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> langchain_core.runnables.history &lt;span style="color:#f92672">import&lt;/span> RunnableWithMessageHistory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 加载环境变量&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>load_dotenv()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 确保 API key 可用&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#e6db74">&amp;#34;OPENAI_API_KEY&amp;#34;&lt;/span> &lt;span style="color:#f92672">not&lt;/span> &lt;span style="color:#f92672">in&lt;/span> os&lt;span style="color:#f92672">.&lt;/span>environ:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">raise&lt;/span> &lt;span style="color:#a6e22e">ValueError&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;OPENAI_API_KEY not found in environment variables.&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 1. 初始化 LLM&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 我们使用特定模型，并将 temperature 设置为 0.7&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 在创造性和可预测性之间取得平衡&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>llm &lt;span style="color:#f92672">=&lt;/span> ChatOpenAI(model&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;gpt-4o&amp;#34;&lt;/span>, temperature&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0.7&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 2. 定义 Prompt 模板&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 这个模板指示 AI 的角色和行为&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># `MessagesPlaceholder` 是关键组件，告诉链在哪里注入对话历史&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>prompt &lt;span style="color:#f92672">=&lt;/span> ChatPromptTemplate&lt;span style="color:#f92672">.&lt;/span>from_messages([
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#e6db74">&amp;#34;system&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;你是一个有帮助的 AI 助手。你提供简洁准确的答案。&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MessagesPlaceholder(variable_name&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;history&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#e6db74">&amp;#34;human&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">{input}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 3. 实例化对话记忆&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 我们使用简单的内存缓冲区。对于生产环境，你需要替换为持久化存储&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 如 Redis 或数据库&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># `chat_history` 是映射到 MessagesPlaceholder 的 key&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>demo_memory &lt;span style="color:#f92672">=&lt;/span> ConversationBufferMemory(memory_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;history&amp;#34;&lt;/span>, return_messages&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 4. 构建带有消息历史的 Runnable Chain&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 这结合了 prompt、LLM 和记忆管理&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># RunnableWithMessageHistory 类自动处理加载和保存消息&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>conversational_chain &lt;span style="color:#f92672">=&lt;/span> RunnableWithMessageHistory(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> prompt &lt;span style="color:#f92672">|&lt;/span> llm,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">lambda&lt;/span> session_id: demo_memory,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> input_messages_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;input&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> history_messages_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;history&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 5. 与链交互&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># `config` 字典对于有状态操作至关重要&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 我们传递 `session_id` 确保消息为正确的对话存储和检索&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">chat&lt;/span>(session_id: str, user_input: str):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> response &lt;span style="color:#f92672">=&lt;/span> conversational_chain&lt;span style="color:#f92672">.&lt;/span>invoke(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {&lt;span style="color:#e6db74">&amp;#34;input&amp;#34;&lt;/span>: user_input},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> config&lt;span style="color:#f92672">=&lt;/span>{&lt;span style="color:#e6db74">&amp;#34;configurable&amp;#34;&lt;/span>: {&lt;span style="color:#e6db74">&amp;#34;session_id&amp;#34;&lt;/span>: session_id}}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;AI: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>response&lt;span style="color:#f92672">.&lt;/span>content&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># --- 演示对话 ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>session_a &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;user_123&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(&lt;span style="color:#e6db74">&amp;#34;--- 开始与 Session A 的对话 ---&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>chat(session_a, &lt;span style="color:#e6db74">&amp;#34;你好！我叫 Alex。&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>chat(session_a, &lt;span style="color:#e6db74">&amp;#34;LangChain 的主要用途是什么？&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>chat(session_a, &lt;span style="color:#e6db74">&amp;#34;你记得我的名字吗？&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># --- 用不同 session 验证隔离 ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>session_b &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;user_456&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#ae81ff">\n&lt;/span>&lt;span style="color:#e6db74">--- 开始与 Session B 的对话 ---&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>chat(session_b, &lt;span style="color:#e6db74">&amp;#34;你知道我的名字吗？&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="高级能力检索增强生成rag">高级能力：检索增强生成（RAG）&lt;/h2>
+&lt;p>对于需要访问特定领域知识的聊天机器人，RAG 架构是必不可少的。&lt;/p></description></item><item><title>OpenAI 生产环境最佳实践指南（译）</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/openai-production-best-practices/</link><pubDate>Thu, 05 Mar 2026 01:01:06 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/openai-production-best-practices/</guid><description>&lt;blockquote>
+&lt;p>&lt;strong>本文翻译自&lt;/strong>：OpenAI API Documentation - Production Best Practices&lt;br>
+&lt;strong>原文链接&lt;/strong>：https://developers.openai.com/api/docs/guides/production-best-practices/&lt;br>
+&lt;strong>翻译说明&lt;/strong>：本文仅为学习交流目的翻译，版权归原作者所有&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;p>这份指南提供了一套全面的最佳实践，帮助你从原型过渡到生产环境。无论你是经验丰富的机器学习工程师还是刚刚入门的爱好者，这份指南都能为你提供成功部署应用所需的工具——从保护 API 访问到设计能够处理高流量的稳健架构。&lt;/p>
+&lt;h2 id="组织管理">组织管理&lt;/h2>
+&lt;p>登录 OpenAI 账户后，你可以在组织设置中找到组织名称和 ID。组织名称是用户界面中显示的组织标签，组织 ID 是可在 API 请求中使用的唯一标识符。&lt;/p>
+&lt;p>属于多个组织的用户可以通过传递 header 来指定哪个组织用于 API 请求。这些 API 请求的使用量将计入指定组织的配额。如果未提供 header，则将向默认组织计费。你可以在用户设置中更改默认组织。&lt;/p>
+&lt;h3 id="成员权限管理">成员权限管理&lt;/h3>
+&lt;p>你可以从团队页面邀请新成员加入组织。成员可以是&lt;strong>读者&lt;/strong>或&lt;strong>所有者&lt;/strong>：&lt;/p>
+&lt;p>&lt;strong>读者权限&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>可以进行 API 请求&lt;/li>
+&lt;li>可以查看基本的组织信息&lt;/li>
+&lt;li>可以创建、更新和删除组织中的资源（如 Assistants），除非另有说明&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>所有者权限&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>拥有读者的所有权限&lt;/li>
+&lt;li>可以修改账单信息&lt;/li>
+&lt;li>可以管理组织内的成员&lt;/li>
+&lt;/ul>
+&lt;h3 id="账单限额管理">账单限额管理&lt;/h3>
+&lt;p>输入账单信息后，OpenAI 会设置每月 100 美元的使用限额。随着你在平台上使用量的增加，从一级使用层迁移到另一级，你的配额限制会自动提高。你可以在账户设置的限额页面查看当前的使用限制。&lt;/p>
+&lt;p>如果你想在使用量超过特定金额时收到通知，可以通过使用限额页面设置通知阈值。&lt;/p>
+&lt;h2 id="项目分阶段管理">项目分阶段管理&lt;/h2>
+&lt;p>随着规模扩大，你可能需要为 staging 和 production 环境创建单独的项目。你可以在仪表板中创建这些项目，从而隔离开发和测试工作，避免意外干扰线上应用。你还可以限制用户对生产项目的访问，并为每个项目设置自定义的费率和支出限制。&lt;/p>
+&lt;h2 id="扩展架构设计">扩展架构设计&lt;/h2>
+&lt;p>当设计用于生产的应用程序或服务时，重要的是考虑如何扩展以满足流量需求。无论选择哪家云服务提供商，有几个关键领域需要考虑：&lt;/p>
+&lt;h3 id="水平扩展">水平扩展&lt;/h3>
+&lt;p>你可能需要水平扩展应用程序以容纳来自多个来源的请求。这可能涉及部署额外的服务器或容器来分配负载。如果选择这种类型的扩展，请确保你的架构设计能够处理多个节点，并且有机制在它们之间平衡负载。&lt;/p>
+&lt;h3 id="垂直扩展">垂直扩展&lt;/h3>
+&lt;p>另一种选择是垂直扩展应用程序，这意味着你可以增强单个节点的可用资源。这将涉及升级服务器的能力以处理额外的负载。如果选择这种类型的扩展，请确保你的应用程序设计能够利用这些额外资源。&lt;/p>
+&lt;h3 id="缓存策略">缓存策略&lt;/h3>
+&lt;p>通过存储经常访问的数据，你可以改善响应时间，而无需重复调用我们的 API。你的应用程序需要设计为尽可能使用缓存数据，并在添加新信息时使缓存失效。&lt;/p>
+&lt;p>有几种不同的方式可以实现这一点。例如，你可以将数据存储在数据库、文件系统或内存缓存中，具体取决于对你的应用程序最有意义的方式。&lt;/p>
+&lt;h3 id="负载均衡">负载均衡&lt;/h3>
+&lt;p>考虑使用负载均衡技术来确保请求均匀分布在可用服务器之间。这可能涉及在服务器前使用负载均衡器或使用 DNS 轮询。平衡负载将有助于提高性能并减少瓶颈。&lt;/p>
+&lt;h2 id="延迟优化策略">延迟优化策略&lt;/h2>
+&lt;h3 id="模型选择">模型选择&lt;/h3>
+&lt;p>我们的 API 提供不同级别的复杂性和通用性的模型。最强大的模型，如 &lt;code>gpt-5&lt;/code>，可以生成更复杂和多样化的完成，但它们也需要更长的时间来处理你的查询。&lt;/p></description></item></channel></rss>

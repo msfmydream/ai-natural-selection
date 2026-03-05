@@ -1,0 +1,121 @@
+<!doctype html><html lang=zh-CN><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>代码审查助手 | 自然选择号</title>
+<meta name=description content="帮助开发者进行代码审查，发现潜在问题并提供改进建议"><meta name=keywords content="博客,三体,提示词,AI,科幻"><meta name=author content="舰长"><meta property="og:title" content="代码审查助手"><meta property="og:description" content="帮助开发者进行代码审查，发现潜在问题并提供改进建议"><meta property="og:type" content="article"><meta property="og:url" content="https://msfmydream.github.io/ai-natural-selection/prompts/%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E5%8A%A9%E6%89%8B/"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel=stylesheet><link rel=stylesheet href=/ai-natural-selection/css/main.css></head><body><canvas id=starfield class=starfield></canvas><div class=wrapper><header class=header><div class=container><nav class=nav><a href=/ class=logo><span class=logo__icon>🚀</span>
+<span class=logo__text>自然选择号</span>
+</a><button class=nav__toggle aria-label="Toggle navigation" onclick=toggleNav()>
+<span></span>
+<span></span>
+<span></span></button><ul class=nav__menu id=navMenu><li class=nav__item><a href=/ai-natural-selection/ class=nav__link>舰桥</a></li><li class=nav__item><a href=/ai-natural-selection/posts/ class=nav__link>航行日志</a></li><li class=nav__item><a href=/ai-natural-selection/prompts/ class=nav__link>战术指令</a></li><li class=nav__item><a href=/ai-natural-selection/archives/ class=nav__link>航行记录</a></li><li class=nav__item><a href=/ai-natural-selection/about/ class=nav__link>关于星舰</a></li></ul></nav></div></header><main class=main><article class=prompt-detail><div class="container container--narrow"><header class=prompt-detail__header><div class=prompt-detail__meta><span class=prompt-detail__model><span class=prompt-detail__model-icon>🤖</span>
+Claude
+</span><span class=prompt-detail__version>v1.0</span>
+<time class=prompt-detail__date datetime=2026-03-02>2026年3月2日</time></div><h1 class=prompt-detail__title>代码审查助手</h1><p class=prompt-detail__desc>帮助开发者进行代码审查，发现潜在问题并提供改进建议</p><div class=prompt-detail__tags><a href=/prompt_tags/%E7%BC%96%E7%A8%8B class=prompt-detail__tag>编程</a>
+<a href=/prompt_tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5 class=prompt-detail__tag>代码审查</a>
+<a href=/prompt_tags/%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5 class=prompt-detail__tag>最佳实践</a></div></header><div class=prompt-detail__content><h2 id=提示词内容>提示词内容</h2><pre tabindex=0><code>你是一位经验丰富的代码审查专家。请对以下代码进行审查，并按照以下维度进行分析：
+
+## 1. 代码质量
+- 代码可读性和可维护性
+- 命名规范是否清晰
+- 函数/类设计是否合理
+- 注释是否充分
+
+## 2. 潜在问题
+- 边界条件处理
+- 错误处理机制
+- 性能瓶颈
+- 安全风险（SQL注入、XSS等）
+- 内存泄漏风险
+
+## 3. 最佳实践
+- 是否符合语言/框架的最佳实践
+- 设计模式使用是否恰当
+- 是否符合 SOLID 原则
+
+## 4. 改进建议
+针对发现的问题，提供具体的改进代码示例。
+
+请使用以下格式输出：
+
+### 总体评价
+简要评价代码的整体质量（1-5星）
+
+### 详细分析
+[按照上述维度进行分析]
+
+### 改进后的代码
+</code></pre><p>[提供改进后的代码]</p><pre tabindex=0><code>
+待审查代码：
+{{用户输入的代码}}
+</code></pre><h2 id=使用说明>使用说明</h2><h3 id=适用场景>适用场景</h3><ul><li>团队代码审查</li><li>个人代码自查</li><li>学习代码最佳实践</li><li>面试代码评估</li></ul><h3 id=使用方法>使用方法</h3><ol><li>复制提示词</li><li>将 <code>{{用户输入的代码}}</code> 替换为实际代码</li><li>发送给 AI 进行审查</li></ol><h3 id=配合使用的建议>配合使用的建议</h3><ul><li>可以同时提供代码的业务背景，帮助 AI 更好理解</li><li>对于大型代码库，建议分批审查</li><li>可以将 AI 的建议与自己的判断结合使用</li></ul><h2 id=示例输出>示例输出</h2><p><strong>输入代码：</strong></p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_user_data</span>(user_id):
+</span></span><span style=display:flex><span>    query <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;SELECT * FROM users WHERE id = &#34;</span> <span style=color:#f92672>+</span> user_id
+</span></span><span style=display:flex><span>    result <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>execute(query)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> result<span style=color:#f92672>.</span>fetchall()
+</span></span></code></pre></td></tr></table></div></div><p><strong>审查结果：</strong></p><h3 id=总体评价->总体评价 ⭐⭐</h3><p>代码存在严重的安全风险和可维护性问题。</p><h3 id=详细分析>详细分析</h3><p><strong>代码质量：</strong></p><ul><li>函数命名清晰，但没有类型提示</li><li>SQL 查询使用字符串拼接，存在 SQL 注入风险</li></ul><p><strong>安全问题（严重）：</strong></p><ul><li>SQL 注入漏洞：用户输入直接拼接到 SQL 语句中</li><li>没有权限验证</li></ul><p><strong>改进建议：</strong></p><ol><li>使用参数化查询防止 SQL 注入</li><li>添加输入验证</li><li>添加错误处理</li></ol><h3 id=改进后的代码>改进后的代码</h3><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> typing <span style=color:#f92672>import</span> Optional
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> sqlite3
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_user_data</span>(user_id: int) <span style=color:#f92672>-&gt;</span> Optional[list]:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    获取用户数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Args:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        user_id: 用户ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Returns:
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        用户数据列表，如果不存在返回 None
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 验证输入</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> isinstance(user_id, int) <span style=color:#f92672>or</span> user_id <span style=color:#f92672>&lt;=</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>&#34;Invalid user_id&#34;</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 使用参数化查询防止 SQL 注入</span>
+</span></span><span style=display:flex><span>        query <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;SELECT id, username, email FROM users WHERE id = ?&#34;</span>
+</span></span><span style=display:flex><span>        result <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>execute(query, (user_id,))
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> result<span style=color:#f92672>.</span>fetchall()
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> sqlite3<span style=color:#f92672>.</span>Error <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        logger<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Database error: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>        logger<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Unexpected error: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>None</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=版本历史>版本历史</h2><ul><li><strong>v1.0</strong> (2026-03-02) - 初始版本</li></ul></div><div class=prompt-detail__actions><button class="btn btn--primary" onclick=copyPrompt()>
+<svg class="icon" viewBox="0 0 24 24" fill="currentcolor"><path d="M16 1H4c-1.1.0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1.0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1.0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+复制提示词
+</button>
+<span class=copy-hint id=copyHint>已复制到剪贴板！</span></div><footer class=prompt-detail__footer><nav class=prompt-detail__nav><a href=https://msfmydream.github.io/ai-natural-selection/prompts/%E5%A4%96%E6%98%9F%E8%AF%AD%E8%A8%80%E7%BF%BB%E8%AF%91%E6%A8%A1%E5%9D%97-%E5%AD%A6%E6%9C%AF%E7%89%88/ class="prompt-detail__nav-link prompt-detail__nav-link--next"><span class=prompt-detail__nav-label>下一个提示词 →</span>
+<span class=prompt-detail__nav-title>外星语言翻译模块 - 学术版</span></a></nav></footer></div></article></main><footer class=footer><div class=container><div class=footer__content><div class=footer__info><p class=footer__copyright>© 2026 舰长. All rights reserved.</p><p class=footer__powered>Powered by <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+with <a href=https://github.com/ target=_blank rel=noopener>Fresh Theme</a></p></div></div></div></footer></div><script src=/ai-natural-selection/js/main.js></script></body></html>

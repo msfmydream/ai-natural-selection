@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hugo on 自然选择号</title><link>https://msfmydream.github.io/ai-natural-selection/tags/hugo/</link><description>Recent content in Hugo on 自然选择号</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 03 Mar 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://msfmydream.github.io/ai-natural-selection/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>启航 - 自然选择号首次航行日志</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/my-first-post/</link><pubDate>Tue, 03 Mar 2026 10:00:00 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/my-first-post/</guid><description>&lt;h2 id="舰长日志-001">舰长日志 #001&lt;/h2>
+&lt;p>&lt;strong>日期:&lt;/strong> 危机纪元元年&lt;br>
+&lt;strong>位置:&lt;/strong> 地球轨道，近地空间站&lt;br>
+&lt;strong>状态:&lt;/strong> 引擎正常，准备启航&lt;/p>
+&lt;p>这是自然选择号的首次航行日志。经过数日的建造和调试，这艘星舰终于准备完毕，即将驶入浩瀚的信息深空。&lt;/p>
+&lt;h2 id="星舰建造记录">星舰建造记录&lt;/h2>
+&lt;h3 id="为什么选择-hugo">为什么选择 Hugo&lt;/h3>
+&lt;p>在众多星际造船技术中，我选择了 &lt;strong>Hugo&lt;/strong> 来建造这艘星舰。原因如下：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>光速引擎&lt;/strong> - Hugo 用 Go 语言编写，构建速度极快，就像装备了曲率引擎&lt;/li>
+&lt;li>&lt;strong>单体式结构&lt;/strong> - 只需要一个可执行文件，结构简洁，维护方便&lt;/li>
+&lt;li>&lt;strong>丰富的蓝图库&lt;/strong> - 有大量现成的主题可以选择和改造&lt;/li>
+&lt;li>&lt;strong>Markdown 协议&lt;/strong> - 使用 Markdown 编写内容，简单直观，兼容性好&lt;/li>
+&lt;/ol>
+&lt;h3 id="星舰设计理念">星舰设计理念&lt;/h3>
+&lt;p>这艘星舰的设计灵感来自《三体》中的 &lt;strong>自然选择号&lt;/strong> 战舰：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>深空配色&lt;/strong> - 深空蓝、引擎青、星光白&lt;/li>
+&lt;li>&lt;strong>推进器光效&lt;/strong> - 模拟战舰引擎的蓝色光芒&lt;/li>
+&lt;li>&lt;strong>控制台界面&lt;/strong> - 类似战舰控制面板的 UI 设计&lt;/li>
+&lt;li>&lt;strong>星空背景&lt;/strong> - 动态的星空和超光速特效&lt;/li>
+&lt;/ul>
+&lt;h3 id="星舰系统清单">星舰系统清单&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>系统&lt;/th>
+ &lt;th>功能&lt;/th>
+ &lt;th>状态&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>航行日志&lt;/td>
+ &lt;td>文章发布与管理&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>战术指令库&lt;/td>
+ &lt;td>提示词管理&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>航行记录&lt;/td>
+ &lt;td>文章归档&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>星图坐标&lt;/td>
+ &lt;td>标签云&lt;/td>
+ &lt;td>✅ 正常&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="航行计划">航行计划&lt;/h2>
+&lt;p>接下来的航行计划：&lt;/p></description></item><item><title>Hugo 快速入门指南</title><link>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/hugo-tutorial/</link><pubDate>Mon, 02 Mar 2026 15:30:00 +0800</pubDate><guid>https://msfmydream.github.io/ai-natural-selection/posts/2026/03/hugo-tutorial/</guid><description>&lt;h2 id="什么是-hugo">什么是 Hugo&lt;/h2>
+&lt;p>Hugo 是一个用 Go 语言编写的静态网站生成器。它使用 Markdown 文件作为内容源，通过模板引擎生成静态 HTML 文件。&lt;/p>
+&lt;h2 id="安装-hugo">安装 Hugo&lt;/h2>
+&lt;h3 id="windows">Windows&lt;/h3>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-powershell" data-lang="powershell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 使用 Chocolatey&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>choco install hugo-extended
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 或使用 Scoop&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>scoop install hugo-extended
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="macos">macOS&lt;/h3>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 使用 Homebrew&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>brew install hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="linux">Linux&lt;/h3>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 使用 Snap&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>snap install hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="创建新站点">创建新站点&lt;/h2>
+&lt;div class="highlight">&lt;div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+&lt;table style="border-spacing:0;padding:0;margin:0;border:0;">&lt;tr>&lt;td style="vertical-align:top;padding:0;margin:0;border:0;">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+&lt;/span>&lt;span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建新站点&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo new site myblog
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd myblog
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 添加主题&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 配置主题&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;theme = &amp;#39;ananke&amp;#39;&amp;#34;&lt;/span> &amp;gt;&amp;gt; hugo.toml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo new posts/hello.md
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 本地预览&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo server -D
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 构建（输出到 public 目录）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="目录结构">目录结构&lt;/h2>
+&lt;pre tabindex="0">&lt;code>myblog/
+├── archetypes/ # 内容模板
+├── assets/ # 需要处理的资源
+├── content/ # 网站内容
+├── data/ # 数据文件
+├── layouts/ # HTML 模板
+├── static/ # 静态文件
+├── themes/ # 主题
+└── hugo.toml # 站点配置
+&lt;/code>&lt;/pre>&lt;h2 id="常用命令">常用命令&lt;/h2>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>命令&lt;/th>
+ &lt;th>说明&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>&lt;code>hugo new site &amp;lt;name&amp;gt;&lt;/code>&lt;/td>
+ &lt;td>创建新站点&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>hugo new &amp;lt;path&amp;gt;&lt;/code>&lt;/td>
+ &lt;td>创建新内容&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>hugo server&lt;/code>&lt;/td>
+ &lt;td>启动开发服务器&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>hugo server -D&lt;/code>&lt;/td>
+ &lt;td>包含草稿&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>hugo&lt;/code>&lt;/td>
+ &lt;td>构建站点&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>&lt;code>hugo --minify&lt;/code>&lt;/td>
+ &lt;td>压缩构建&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h2 id="front-matter">Front Matter&lt;/h2>
+&lt;p>Front Matter 是内容文件顶部的元数据：&lt;/p></description></item></channel></rss>
