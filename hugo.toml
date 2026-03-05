@@ -3,6 +3,9 @@ languageCode = 'zh-CN'
 title = '自然选择号'
 theme = 'fresh-theme'
 
+# 允许渲染未来日期的文章
+buildFuture = true
+
 [params]
   author = '舰长'
   description = '在深空中记录思考，收藏战术指令'
